@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="contentWrap">
+      <div id="column1">
+        <div id="nickHead">You are <span id="nickWrapper">user1</span>.</div>
+        <div id="messagesWrap">
+          <ul id="messages"></ul>
+        </div>
+      </div>
+      <div id="column2">
+        <div id="userHead">Online Users:</div>
+        <ul id="users"></ul>
+      </div>
+    </div>
+
+    <form action="">
+      <input id="m" autocomplete="off" /><button><b>Send</b></button>
+    </form>
+
+    <script
+       src="https://code.jquery.com/jquery-3.1.1.min.js"
+       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+       crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
