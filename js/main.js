@@ -37,10 +37,20 @@ $(function() {
 			if (errorCode == 'auth/email-already-in-use') {
 				alert('Email is already in use.');
 			}
+      else if (errorCode == 'auth/invalid-email') {
+        alert('Email address is not valid.');
+      }
+      else if (errorCode == 'auth/operation-not-allowed') {
+        alert('Email/Password Accounts currently disabled. Please try again later.');
+      }
+      else if (errorCode == 'auth/weak-password') {
+        alert('Password is not strong enough.');
+      }
 			else {
 				alert(errorMessage);
 			}
 			console.log(error);
+      console.log(error.message);
 		});
 
     // TODO: Close modal and go to logged in page.
@@ -56,9 +66,18 @@ $(function() {
 			// Error Handling
 			var errorCode = error.code;
 			var errorMessage = error.message;
-			if (errorCode == 'auth/email-already-in-use') {
-				alert('Email is already in use.');
+			if (errorCode == 'auth/invalid-email') {
+				alert('Email address is not valid.');
 			}
+      else if (errorCode == 'auth/user-disabled') {
+        alert('User has been disabled.');
+      }
+      else if (errorCode == 'auth/user-not-found') {
+        alert('No such user for given email.');
+      }
+      else if (errorCode == 'auth/wrong-password') {
+        alert('Wrong password.');
+      }
 			else {
 				alert(errorMessage);
 			}
