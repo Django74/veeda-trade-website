@@ -7,115 +7,201 @@
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 </head>
 <body>
-    <form class="form-horizontal">
-    <fieldset>
 
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">First Name</label>
-        <div class="col-md-4">
-            <input id="firstName" name="firstName" type="text" placeholder="" class="form-control input-md">
-
+<!--Navbar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.PNG" height="30">
+            </a>
         </div>
-    </div>
 
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">Last Name</label>
-        <div class="col-md-4">
-            <input id="lastName" name="lastName" type="text" placeholder="" class="form-control input-md">
-        </div>
-    </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                <!--<li><a href="#">Link</a></li>-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Collectibles<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Electronics<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </li>
 
-    <!-- Multiple Radios (inline) -->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="radios" >Gender</label>
-        <div class="col-md-4" id="radios">
-            <label class="radio-inline" for="radios-Male">
-                <input type="radio" name="radios" id="radios-Male" value="Male" checked="checked">
-                Male
-            </label>
-            <label class="radio-inline" for="radios-Female">
-                <input type="radio" name="radios" id="radios-Female" value="Female">
-                Female
-            </label>
-        </div>
-    </div>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" placeholder="What are you looking for?">
+                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Location">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" id="showDialog">My Account</a>
+                </li>
+            </ul>
+            <div id="dialog"></div>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="login-link">
+                    <a data-toggle="modal" href="#login-pageModal" data-target="#login-modal">Sign In</a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-    <!-- Select Basic -->
-    <div class="form-group">
-        <label class="control-label col-md-4" for="registration-date">Date of birth:</label>
-        <div class="col-md-4">
-            <div class="input-group registration-date-time">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-                <input class="form-control" name="registration_date" id="registration-date" type="date">
+<div class="modal fade" id="account-details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">First Name</label>
+                        <div class="col-md-4">
+                            <input id="firstName" name="firstName" type="text" placeholder="" class="form-control input-md">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Last Name</label>
+                        <div class="col-md-4">
+                            <input id="lastName" name="lastName" type="text" placeholder="" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Multiple Radios (inline) -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="radios" >Gender</label>
+                        <div class="col-md-4" id="radios">
+                            <label class="radio-inline" for="radios-Male">
+                                <input type="radio" name="radios" id="radios-Male" value="Male" checked="checked">
+                                Male
+                            </label>
+                            <label class="radio-inline" for="radios-Female">
+                                <input type="radio" name="radios" id="radios-Female" value="Female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="registration-date">Date of birth:</label>
+                        <div class="col-md-4">
+                            <div class="input-group registration-date-time">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+                                <input class="form-control" name="registration_date" id="registration-date" type="date">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="contact-address">Contact address</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="contact-address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Telephone</label>
+                        <div class="col-md-4">
+                            <input id="telephone" type="text" placeholder="" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Fax</label>
+                        <div class="col-md-4">
+                            <input id="fax" type="text" placeholder="" class="form-control input-md">
+
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="home-address">Home address</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="home-address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Home telephone</label>
+                        <div class="col-md-4">
+                            <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="website">Website</label>
+                        <div class="col-md-4">
+                            <input id="website" type="text" placeholder="" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="save-button"></label>
+                        <div class="col-md-4">
+                            <button id="save-button"     class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+
+                    </fieldset>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- Textarea -->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="contact-address">Contact address</label>
-        <div class="col-md-4">
-            <textarea class="form-control" id="contact-address"></textarea>
-        </div>
-    </div>
-
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">Telephone</label>
-        <div class="col-md-4">
-            <input id="telephone" type="text" placeholder="" class="form-control input-md">
-        </div>
-    </div>
-
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">Fax</label>
-        <div class="col-md-4">
-            <input id="fax" type="text" placeholder="" class="form-control input-md">
-
-        </div>
-    </div>
-
-    <!-- Textarea -->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="home-address">Home address</label>
-        <div class="col-md-4">
-            <textarea class="form-control" id="home-address"></textarea>
-        </div>
-    </div>
-
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">Home telephone</label>
-        <div class="col-md-4">
-            <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-        </div>
-    </div>
-
-    <!-- Text input-->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="website">Website</label>
-        <div class="col-md-4">
-            <input id="website" type="text" placeholder="" class="form-control input-md">
-        </div>
-    </div>
-
-    <!-- Button -->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="save-button"></label>
-        <div class="col-md-4">
-            <button id="save-button"     class="btn btn-primary">Save</button>
-        </div>
-    </div>
-
-    </fieldset>
-    </form>
     <script src="js/main.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
