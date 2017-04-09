@@ -20,27 +20,51 @@ $(function() {
 		console.log(email);
 		var password = document.getElementById('register-password').value;
 		console.log(password);
-		const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
-		promise
-			.catch(e => console.log(e.message));
-		
-		firebase.auth().onAuthStateChanged(function(user) {
-			if(user) {
-				var user = firebase.auth().currentUser;	
-				
-				var database = firebase.database();
-				database.ref('Users/' + user.uid).set({
-					email: email,
-					password: password
-				});
+		firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+			// Error Handling
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			if (errorCode == 'auth/email-already-in-use') {
+				alert('Email is already in use.');
 			}
 			else {
-				console.log("No user signed in.")
+				alert(errorMessage);
 			}
+			console.log(error);
 		});
-			
 		
 		return false;
+	});
+	
+	$('#login-form').on('submit', function () {
+		var email = document.getElementById('login-email').value;
+		console.log(email);
+		var password = document.getElementById('login-password').value;
+		console.log(password);
+		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+			// Error Handling
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			if (errorCode == 'auth/email-already-in-use') {
+				alert('Email is already in use.');
+			}
+			else {
+				alert(errorMessage);
+			}
+			console.log(error);
+		});
+		
+		return false;
+	});
+	
+	firebase.auth().onAuthStateChanged(function(user) {
+	if(user) {
+		console.log(user);
+		console.log("Email: " + user.email);	
+	}
+	else {
+		console.log("No user signed in.");
+	}
 	});
 
 });
