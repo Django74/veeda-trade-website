@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Veeda - Create Post</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+      <link rel="stylesheet" href="test.css">
+</head>
+<body>
+	<!-- <div>Hello World</div> -->
+	
+	<!-- Header -->
+		<!-- Logo -->
+	
+		<!-- IF LOGGED IN: Create Post / My Account -->
+		
+		<!-- Quick Search & Location -->
+	
+		<!-- Advanced Search -->
+	
+		<!-- Login / Welcome -->
+	
+	<!-- Select Category -->
+	
+	<!-- Enter Item Details -->
+	
+	
+	<div class="container">
+	<div class="row">
+	    
+	    <div class="col-md-8 col-md-offset-2">
+	        
+    		<h1>Create post</h1>
+    		
+    		<form action="" method="POST">
+    		    
+    		    <div class="form-group has-error">
+    		        <label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
+    		        <input type="text" class="form-control" name="slug" />
+    		        <span class="help-block">Field not entered!</span>
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <label for="title">Title <span class="require">*</span></label>
+    		        <input type="text" class="form-control" name="title" />
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <label for="title">Price <span class="require">*</span></label>
+    		        <input type="text" class="form-control" name="title" />
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <label for="title">Year <span class="require">*</span></label>
+    		        <input type="text" class="form-control" name="title" />
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <label for="title">Kilometers <span class="require">*</span></label>
+    		        <input type="text" class="form-control" name="title" />
+    		    </div>    		    
+    		    
+    		    <br>
+    		    
+				<!-- Multiple Radios -->
+				<div class="form-group">
+				  <label class="col-md-2 control-label" for="radios">Status: </label>
+				  <div class="col-md-4">
+				  <div class="radio">
+					<label for="radios-0">
+					  <input name="radios" id="radios-0" value="1" checked="checked" type="radio">
+					  New
+					</label>
+					</div>
+				  <div class="radio">
+					<label for="radios-1">
+					  <input name="radios" id="radios-1" value="2" type="radio">
+					  Used
+					</label>
+					</div>				  <div class="radio">
+					<label for="radios-2">
+					  <input name="radios" id="radios-2" value="3" type="radio">
+					  Lease Takeover
+					</label>
+					</div>
+				  </div>
+				</div>   		    
+    		    <br><br><br>
+    		    <br><br><br>
+    		    
+    		    <!-- Select Basic -->
+    		    
+				<div class="form-group">
+				  <label class="col-md-2 control-label" for="selectbasic">Make: </label>
+				  <div class="col-md-3">
+					<select id="selectbasic" name="selectbasic" class="form-control">
+					  <option value="1">Acura</option>
+					  <option value="2">BMW</option>
+					  <option value="3">Ford</option>
+					  <option value="4">Honda</option>
+					  <option value="5">Subaru</option>
+					  <option value="6">Toyota</option>
+					</select>
+				  </div>
+    		    </div>
+    		    
+    		    <br><br><br>
+    		    
+    		    <!-- Model -->
+				<div class="form-group">
+				  <label class="col-md-2 control-label" for="selectbasic">Model: </label>
+				  <div class="col-md-3">
+					<select id="selectbasic" name="selectbasic" class="form-control">
+					  <option value="1">edward</option>
+					  <option value="2">edward</option>
+					  <option value="3">vincent</option>
+					  <option value="4">aron</option>
+					  <option value="5">diljot</option>
+					  <option value="6">saitama</option>
+					</select>
+				  </div>
+    		    </div>
+    		    
+    		    <br><br><br>    		    
+    		    
+				<div class="form-group">
+				  <label class="col-md-2 control-label" for="selectbasic">Color: </label>
+				  <div class="col-md-3">
+					<select id="selectbasic" name="selectbasic" class="form-control">
+					  <option value="1">Black</option>
+					  <option value="2">Silver</option>
+					</select>
+				  </div>
+				</div>
+    		    
+    		    <br><br><br>
+    		   
+    		    <div class="form-group">
+    		        <label for="description">Description</label>
+    		        <textarea rows="5" class="form-control" name="description" ></textarea>
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <p><span class="require">*</span> - required fields</p>
+    		    </div>
+    		    
+    		    
+    		    <!-- Upload File -->
+    		    <div>
+					<label class="upload-group">
+					Upload File
+					<input type="file" class="upload-group" id="file">
+					</label>
+    		    </div>
+    		    
+    		    <br><br>
+
+    		    <div class="form-group">
+    		        <button type="submit" class="btn btn-primary">
+    		            Create
+    		        </button>
+    		        <button class="btn btn-default">
+    		            Cancel
+    		        </button>
+    		    </div>
+
+    		</form>
+		</div>
+		
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC9afXB6NZTuPHBC5R0YFwz0Kt0G2HqN04",
+    authDomain: "veeda-8bc58.firebaseapp.com",
+    databaseURL: "https://veeda-8bc58.firebaseio.com",
+    projectId: "veeda-8bc58",
+    storageBucket: "veeda-8bc58.appspot.com",
+    messagingSenderId: "260648117580"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  function funct1(evt)
+  {
+      var year = $('#year').text();
+
+
+      firebase.database.ref('Post/').set({Year:year});
+      evt.preventDefault();
+  }
+
+  var submit = document.getElementsByTagName('button')[0];
+
+  submit.onclick = funct1;
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x`
+</body>
+</html>
+
