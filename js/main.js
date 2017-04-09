@@ -124,15 +124,3 @@ $(function() {
 
 });
 
-
-$('#showDialog').click(function() {
-    $('#dialog').dialog(
-        {
-            open: function() {
-                $(this).load('account-details.html');
-            },
-            modal: true
-        }
-    );
-    $('#dialog').dialog('open');
-});
