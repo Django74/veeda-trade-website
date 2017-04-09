@@ -113,7 +113,6 @@ $(function() {
 	if(user) {
 		console.log(user);
 		console.log("Email: " + user.email);
-    console.log("Display Name: " + user.displayName);
 	}
 	else {
 		console.log("No user signed in.");
@@ -144,4 +143,17 @@ $(function() {
 		e.preventDefault();
 	});
 
+});
+
+
+$('#showDialog').click(function() {
+    $('#dialog').dialog(
+        {
+            open: function() {
+                $(this).load('account-details.html');
+            },
+            modal: true
+        }
+    );
+    $('#dialog').dialog('open');
 });
