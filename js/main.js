@@ -14,5 +14,33 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
+	
+	$('#register-form').on('submit', function () {
+		var email = document.getElementById('register-email').value;
+		console.log(email);
+		var password = document.getElementById('register-password').value;
+		console.log(password);
+		const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
+		promise
+			.catch(e => console.log(e.message));
+		
+		firebase.auth().onAuthStateChanged(function(user) {
+			if(user) {
+				var user = firebase.auth().currentUser;	
+				
+				var database = firebase.database();
+				database.ref('Users/' + user.uid).set({
+					email: email,
+					password: password
+				});
+			}
+			else {
+				console.log("No user signed in.")
+			}
+		});
+			
+		
+		return false;
+	});
 
 });
