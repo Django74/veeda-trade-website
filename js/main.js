@@ -14,7 +14,7 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-	
+
 	$('#register-form').on('submit', function () {
 		var email = document.getElementById('register-email').value;
 		console.log(email);
@@ -32,10 +32,10 @@ $(function() {
 			}
 			console.log(error);
 		});
-		
+
 		return false;
 	});
-	
+
 	$('#login-form').on('submit', function () {
 		var email = document.getElementById('login-email').value;
 		console.log(email);
@@ -53,18 +53,27 @@ $(function() {
 			}
 			console.log(error);
 		});
-		
+
 		return false;
 	});
-	
+
 	firebase.auth().onAuthStateChanged(function(user) {
 	if(user) {
 		console.log(user);
-		console.log("Email: " + user.email);	
+		console.log("Email: " + user.email);
 	}
 	else {
 		console.log("No user signed in.");
 	}
+	});
+
+	$('#create').click(function(e){
+        console.log("running");
+		var year = $('#year').val();
+		firebase.database().ref('Posts/').set({
+			Year:year
+		});
+		e.preventDefault();
 	});
 
 });
