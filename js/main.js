@@ -1,5 +1,6 @@
 $(function() {
-
+	var selectedFile;
+	var noImage = true;
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -145,31 +146,97 @@ $(function() {
 	});
 
 	$('#create').click(function(e){
+		var status;
+		var url;
+		var downloadURL;
 		var year = $('#year').val();
 		var title = $('#title').val();
 		var price = $('#price').val();
 		var km = $('#kilometers').val();
-		var status = $('#radio').val();
+		var used = document.getElementById('radio-1').checked;
+		var newCar = document.getElementById('radio-0').checked;
+		var lease = document.getElementById('radio-2').checked;
 		var make = $('#selectbasic').val();
 		var model = $('#selectmodel').val();
 		var color = $('#selectcolor').val();
 		var description = $('#description').val();
 		var newPostKey = firebase.database().ref().child('post').push().key;
-		firebase.database().ref('Posts/Cars/'+ newPostKey).set({
-			Year:year,
-			Title:title,
-			Kilometers:km,
-			Status:status,
-			Make:make,
-			Model:model,
-			Color:color,
-			Description:description
-		});
+		if (used == true){
+			status = $('#radio-1').val();
+		} else if( newCar == true){
+			status = $('#radio-0').val();
+		} else {
+			status = $('#radio-2').val();
+		}
+
+		if(noImage == false){
+			var filename = selectedFile.name;
+			var storageRef = firebase.storage().ref('Posts/Cars/' + newPostKey +'/' + filename);
+			var uploadTask = storageRef.put(selectedFile);
+			
+			// Register three observers:
+			// 1. 'state_changed' observer, called any time the state changes
+			// 2. Error observer, called on failure
+			// 3. Completion observer, called on successful completion
+			uploadTask.on('state_changed', function(snapshot){
+			  // Observe state change events such as progress, pause, and resume
+			  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+			  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			  console.log('Upload is ' + progress + '% done');
+			  switch (snapshot.state) {
+				case firebase.storage.TaskState.PAUSED: // or 'paused'
+				  console.log('Upload is paused');
+				  break;
+				case firebase.storage.TaskState.RUNNING: // or 'running'
+				  console.log('Upload is running');
+				  break;
+			  }
+			}, function(error) {
+			  // Handle unsuccessful uploads
+			}, function() {
+			  // Handle successful uploads on complete
+			  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+			  downloadURL = uploadTask.snapshot.downloadURL;
+			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
+				Source: downloadURL,
+				Year:year,
+				Title:title,
+				Kilometers:km,
+				Status:status,
+				Make:make,
+				Model:model,
+				Color:color,
+				Description:description,
+			});
+			});
+		}
+		else{
+			downloadURL = "";
+			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
+				Source: downloadURL,
+				Year:year,
+				Title:title,
+				Kilometers:km,
+				Status:status,
+				Make:make,
+				Model:model,
+				Color:color,
+				Description:description,
+			});
+		}
 		e.preventDefault();
 	});
-
+	
+	$('#file').on("change", function(e) {
+		selectedFile = e.target.files[0];
+		noImage = false;
+	});
+	
+	
 });
 
+<<<<<<< HEAD
+=======
 
 $('#showDialog').click(function() {
     $('#dialog').dialog(
@@ -182,3 +249,4 @@ $('#showDialog').click(function() {
     );
     $('#dialog').dialog('open');
 });
+>>>>>>> origin/master
