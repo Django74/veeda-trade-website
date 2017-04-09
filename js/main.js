@@ -15,6 +15,16 @@ $(function() {
 		e.preventDefault();
 	});
 
+  /* Pseudo-code for log out.
+  $('#logout-button').click(function(e) {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+  });
+  */
+
 	$('#register-form').on('submit', function () {
 		var email = document.getElementById('register-email').value;
 		console.log(email);
@@ -33,6 +43,7 @@ $(function() {
 			console.log(error);
 		});
 
+    // TODO: Close modal and go to logged in page.
 		return false;
 	});
 
@@ -54,6 +65,7 @@ $(function() {
 			console.log(error);
 		});
 
+    // TODO: Close modal and go to logged in page.
 		return false;
 	});
 
