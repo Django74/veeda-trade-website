@@ -1,3 +1,14 @@
+//Autofills field based on previous data in database for user settings
+$(document).ready(function () {
+    var userID = firebase.auth().currentUser.uid;
+    return firebase.database().ref('/Users/' + userID).once('value').then(function (snapshot) {
+        var firstName = snapshot.val().FirstName;
+        document.getElementById("first_name_field").value = firstName;
+    });
+});
+
+
+//Saves user data to the data base
 $(function() {
     $('#account-info-btn').click(function(e){
         var firstName = $('#first_name').val();
