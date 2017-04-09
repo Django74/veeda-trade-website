@@ -173,7 +173,7 @@ $(function() {
 			var filename = selectedFile.name;
 			var storageRef = firebase.storage().ref('Posts/Cars/' + newPostKey +'/' + filename);
 			var uploadTask = storageRef.put(selectedFile);
-			
+
 			// Register three observers:
 			// 1. 'state_changed' observer, called any time the state changes
 			// 2. Error observer, called on failure
@@ -226,27 +226,11 @@ $(function() {
 		}
 		e.preventDefault();
 	});
-	
+
 	$('#file').on("change", function(e) {
 		selectedFile = e.target.files[0];
 		noImage = false;
 	});
-	
-	
-});
 
-<<<<<<< HEAD
-=======
 
-$('#showDialog').click(function() {
-    $('#dialog').dialog(
-        {
-            open: function() {
-                $(this).load('account-details.html');
-            },
-            modal: true
-        }
-    );
-    $('#dialog').dialog('open');
 });
->>>>>>> origin/master
