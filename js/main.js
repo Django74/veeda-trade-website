@@ -99,10 +99,25 @@ $(function() {
 	});
 
 	$('#create').click(function(e){
-        console.log("running");
 		var year = $('#year').val();
-		firebase.database().ref('Posts/').set({
-			Year:year
+		var title = $('#title').val();
+		var price = $('#price').val();
+		var km = $('#kilometers').val();
+		var status = $('#radio').val();
+		var make = $('#selectbasic').val();
+		var model = $('#selectmodel').val();
+		var color = $('#selectcolor').val();
+		var description = $('#description').val();
+		var newPostKey = firebase.database().ref().child('post').push().key;
+		firebase.database().ref('Posts/Cars/'+ newPostKey).set({
+			Year:year,
+			Title:title,
+			Kilometers:km,
+			Status:status,
+			Make:make,
+			Model:model,
+			Color:color,
+			Description:description
 		});
 		e.preventDefault();
 	});
