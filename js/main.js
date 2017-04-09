@@ -46,6 +46,20 @@ $(function() {
 
     var database = firebase.database();
 
+    /*
+    var uniqueName = true;
+    firebase.database().ref('/Users/').once('value').then(function(snapshot) {
+      console.log("TEST READ DATA");
+      var checkname = snapshot.val().username;
+      console.log(checkname);
+      if (username == checkname) {
+        uniqueName = false;
+      }
+    });
+    console.log(uniqueName);*/
+
+    // Check password matches confirm password and username is unique
+    //if (password == confirm_password && uniqueName == true)
 
 		firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
       var user = firebase.auth().currentUser;
