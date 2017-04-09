@@ -182,8 +182,20 @@
     messagingSenderId: "260648117580"
   };
   firebase.initializeApp(config);
-  
-  function
+
+  var database = firebase.database();
+  function funct1(evt)
+  {
+      var year = $('#year').text();
+
+
+      firebase.database.ref('Post/').set({Year:year});
+      evt.preventDefault();
+  }
+
+  var submit = document.getElementsByTagName('button')[0];
+
+  submit.onclick = funct1;
 </script>
 
 
