@@ -42,8 +42,19 @@ $(function() {
     var username = document.getElementById('register-username').value;
 		var email = document.getElementById('register-email').value;
 		var password = document.getElementById('register-password').value;
+    var confirm_password = document.getElementById('confirm-password').value;
+
+    var database = firebase.database();
+
+
 		firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
       var user = firebase.auth().currentUser;
+
+      firebase.database().ref('Users/' + user.uid).set({
+        Email: email,
+        Name: username
+      });
+
       user.updateProfile({
       displayName: username
       }).then(function() {
