@@ -1,9 +1,0 @@
-{
-  "name": "Veeda",
-  "version": "1.0.0",
-  "description": "Trade Website for SENG513",
-  "dependencies": {
-    "express": "^4.15.2"
-  },
-  "scripts": {}
-}
