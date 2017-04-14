@@ -156,8 +156,8 @@ $(function() {
 		var used = document.getElementById('radio-1').checked;
 		var newCar = document.getElementById('radio-0').checked;
 		var lease = document.getElementById('radio-2').checked;
-		var make = $('#selectbasic').val();
-		var model = $('#selectmodel').val();
+		var make = $('#selectMake').val();
+		var model = $('#selectModel').val();
 		var color = $('#selectcolor').val();
 		var description = $('#description').val();
 		var newPostKey = firebase.database().ref().child('post').push().key;

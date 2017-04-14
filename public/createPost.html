@@ -88,47 +88,58 @@
 			<br><br><br>
 			<br><br><br>
 			
-			<!-- Select Basic -->
+			<!-- Select Make -->
 			
 			<div class="form-group">
-			  <label class="col-md-2 control-label" for="selectbasic">Make: </label>
+			  <label class="col-md-2 control-label" for="selectMake">Make: </label>
 			  <div class="col-md-3">
-				<select id="selectbasic" name="selectbasic" class="form-control">
+				<select id="selectMake" name="selectMake" class="form-control" onchange="showForm()">
+				  <option value="0">Select Option</option>
 				  <option value="Acura">Acura</option>
-				  <option value="BMW">BMW</option>
-				  <option value="Ford">Ford</option>
 				  <option value="Honda">Honda</option>
-				  <option value="Subaru">Subaru</option>
-				  <option value="Toyota">Toyota</option>
 				</select>
 			  </div>
 			</div>
 			
-			<br><br><br>
+			<br>
 			
-			<!-- Model -->
-			<div class="form-group">
-			  <label class="col-md-2 control-label" for="selectbasic">Model: </label>
+			<!-- Select acuraModel -->
+			<div class="form-group" style="display:none" id="selectAcuraModel">
+			  <label class="col-md-2 control-label" for="selectAcuraModel">Model: </label>
 			  <div class="col-md-3">
-				<select id="selectmodel" name="selectbasic" class="form-control">
-				  <option value="1">edward</option>
-				  <option value="2">edward</option>
-				  <option value="3">vincent</option>
-				  <option value="4">aron</option>
-				  <option value="5">diljot</option>
-				  <option value="6">saitama</option>
+				<select id="selectModel" name="selectAcuraModel" class="form-control" onchange="showForm()">
+				  <option value="ILX">ILX</option>
+				  <option value="NSX">NSX</option>
+				  <option value="MDX">MDX</option>
+
+				</select>
+			  </div>
+			</div>  		
+
+			<!-- Select hondaModel -->
+			<div class="form-group" style="display:none" id="selectHondaModel">
+			  <label class="col-md-2 control-label" for="selectHondaModel">Model: </label>
+			  <div class="col-md-3">
+				<select id="selectModel" name="selectHondaModel" class="form-control" onchange="showForm()">
+				  <option value="HR-V">HR-V</option>
+				  <option value="Accord Sedan">Accord Sedan</option>
+				  <option value="Odyssey">Odyssey</option>
+
 				</select>
 			  </div>
 			</div>
 			
-			<br><br><br>    		    
+			<br><br><br>    			
 			
 			<div class="form-group">
 			  <label class="col-md-2 control-label" for="selectbasic">Color: </label>
 			  <div class="col-md-3">
 				<select id="selectcolor" name="selectbasic" class="form-control">
-				  <option value="1">Black</option>
-				  <option value="2">Silver</option>
+				  <option value="Black">Black</option>
+				  <option value="Silver">Silver</option>
+				  <option value="Red">Red</option>
+				  <option value="Blue">Blue</option>
+				  <option value="White">White</option>
 				</select>
 			  </div>
 			</div>
@@ -169,7 +180,7 @@
 		
 	</div>
 </div>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https	://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
 
 <script>
@@ -184,6 +195,29 @@
   };
   firebase.initializeApp(config);
 </script>
+
+
+
+<script type="text/javascript">
+    function showForm() {
+        var selopt = document.getElementById("selectMake").value;
+        if (selopt == "Acura") {
+            document.getElementById("selectAcuraModel").style.display = "block";
+            document.getElementById("selectHondaModel").style.display = "none";
+        }
+        if (selopt == "Honda") {
+            document.getElementById("selectHondaModel").style.display = "block";
+            document.getElementById("selectAcuraModel").style.display = "none";
+        }
+        if (selopt == 0) {
+            document.getElementById("selectHondaModel").style.display = "none";
+            document.getElementById("selectAcuraModel").style.display = "none";
+        }
+    }
+</script>
+
+
+
 <script src="js/main.js"></script>
 </body>
 </html>
