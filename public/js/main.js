@@ -81,6 +81,8 @@ $(function() {
 	        // An error happened.
 	      });
 
+				alert('Registration complete!');
+
 	    }, function(error) {
 	  			// Error Handling
 	  			var errorCode = error.code;
@@ -116,7 +118,11 @@ $(function() {
 	$('#login-form').on('submit', function () {
 		var email = document.getElementById('login-email').value;
 		var password = document.getElementById('login-password').value;
-		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+		firebase.auth().signInWithEmailAndPassword(email, password)
+		.then(function() {
+			alert('Login successful!');
+		})
+		.catch(function(error) {
 			// Error Handling
 			var errorCode = error.code;
 			var errorMessage = error.message;
@@ -245,4 +251,3 @@ $(function() {
 
 
 });
-
