@@ -1,5 +1,6 @@
 $(function() {
 	var selectedFile;
+	var postArray;
 	var noImage = true;
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
@@ -160,6 +161,7 @@ $(function() {
 		var model = $('#selectModel').val();
 		var color = $('#selectcolor').val();
 		var description = $('#description').val();
+		var user = firebase.auth().currentUser;
 		var newPostKey = firebase.database().ref().child('post').push().key;
 		if (used == true){
 			status = $('#radio-1').val();
@@ -207,6 +209,7 @@ $(function() {
 				Model:model,
 				Color:color,
 				Description:description,
+				User: user.uid,
 			});
 			});
 		}
@@ -222,6 +225,7 @@ $(function() {
 				Model:model,
 				Color:color,
 				Description:description,
+				User: user.uid,
 			});
 		}
 		e.preventDefault();
@@ -234,3 +238,4 @@ $(function() {
 
 
 });
+
