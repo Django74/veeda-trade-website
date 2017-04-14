@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Trade Website for SENG513",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "firebase-admin": "^4.2.1"
   },
   "scripts": {}
 }

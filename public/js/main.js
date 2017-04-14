@@ -47,59 +47,66 @@ $(function() {
 
     var database = firebase.database();
 
-    /*
-    var uniqueName = true;
-    firebase.database().ref('/Users/').once('value').then(function(snapshot) {
-      console.log("TEST READ DATA");
-      var checkname = snapshot.val().username;
-      console.log(checkname);
-      if (username == checkname) {
-        uniqueName = false;
-      }
-    });
-    console.log(uniqueName);*/
+		if (password == confirm_password) {
+			// Implementation for IF username has to be unique
+	    /*
+	    var uniqueName = true;
+	    firebase.database().ref('/Users/').once('value').then(function(snapshot) {
+	      console.log("TEST READ DATA");
+	      var checkname = snapshot.val().username;
+	      console.log(checkname);
+	      if (username == checkname) {
+	        uniqueName = false;
+	      }
+	    });
+	    console.log(uniqueName);*/
 
-    // Check password matches confirm password and username is unique
-    //if (password == confirm_password && uniqueName == true)
+	    // Check password matches confirm password and username is unique
+	    //if (password == confirm_password && uniqueName == true)
 
-		firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
-      var user = firebase.auth().currentUser;
+			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+	      var user = firebase.auth().currentUser;
 
-      firebase.database().ref('Users/' + user.uid).set({
-        Email: email,
-        Name: username
-      });
+	      firebase.database().ref('Users/' + user.uid).set({
+	        Email: email,
+	        Name: username
+	      });
 
-      user.updateProfile({
-      displayName: username
-      }).then(function() {
-        // Update successful.
-      }, function(error) {
-        // An error happened.
-      });
+	      user.updateProfile({
+	      displayName: username
+	      }).then(function() {
+	        // Update successful.
+	      }, function(error) {
+	        // An error happened.
+	      });
 
-    }, function(error) {
-  			// Error Handling
-  			var errorCode = error.code;
-  			var errorMessage = error.message;
-  			if (errorCode == 'auth/email-already-in-use') {
-  				alert('Email is already in use.');
-  			}
-        else if (errorCode == 'auth/invalid-email') {
-          alert('Email address is not valid.');
-        }
-        else if (errorCode == 'auth/operation-not-allowed') {
-          alert('Email/Password Accounts currently disabled. Please try again later.');
-        }
-        else if (errorCode == 'auth/weak-password') {
-          alert('Password is not strong enough.');
-        }
-  			else {
-  				alert(errorMessage);
-  			}
-  			console.log(error);
-        console.log(error.message);
-		});
+	    }, function(error) {
+	  			// Error Handling
+	  			var errorCode = error.code;
+	  			var errorMessage = error.message;
+	  			if (errorCode == 'auth/email-already-in-use') {
+	  				alert('Email is already in use.');
+	  			}
+	        else if (errorCode == 'auth/invalid-email') {
+	          alert('Email address is not valid.');
+	        }
+	        else if (errorCode == 'auth/operation-not-allowed') {
+	          alert('Email/Password Accounts currently disabled. Please try again later.');
+	        }
+	        else if (errorCode == 'auth/weak-password') {
+	          alert('Password is not strong enough.');
+	        }
+	  			else {
+	  				alert(errorMessage);
+	  			}
+	  			console.log(error);
+	        console.log(error.message);
+			});
+		}
+
+		else {
+			alert('Passwords do not match.');
+		}
 
     // TODO: Go to logged in page.
     return false;
