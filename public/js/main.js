@@ -118,6 +118,7 @@ $(function() {
 	$('#login-form').on('submit', function () {
 		var email = document.getElementById('login-email').value;
 		var password = document.getElementById('login-password').value;
+
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(function() {
 			alert('Login successful!');
@@ -251,3 +252,17 @@ $(function() {
 
 
 });
+
+function retrieveData(){
+	var database = firebase.database();
+
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var imgId = document.getElementById('test1');
+			var title = document.getElementById('title');
+			imgId.src= childSnapshot.val().Source;
+			title.text= childSnapshot.val().Title;
+		});
+	});
+}
