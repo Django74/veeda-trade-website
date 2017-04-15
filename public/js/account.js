@@ -1,22 +1,33 @@
 //Autofills field based on previous data in database for user settings
 $(document).ready(function () {
-    var userID = firebase.auth().currentUser.uid;
-    return firebase.database().ref('/Users/' + userID).once('value').then(function (snapshot) {
-        var firstName = snapshot.val().FirstName;
-        document.getElementById("first_name_field").value = firstName;
-    });
-});
+    var user = firebase.auth().currentUser;
+    var name, uid;
 
+    if (user != null) {
+      name = user.displayName;
+      uid = user.uid;
+    }
+
+    document.getElementById('#name_field').value = name;
+});
 
 //Saves user data to the data base
 $(function() {
     $('#account-info-btn').click(function(e){
+        var user = firebase.auth().currentUser;
+
         var firstName = $('#first_name').val();
         var lastName = $('#last_name').val();
         var phone = $('#phone').val();
         var mobile = $('#mobile').val();
         var email = $('#email').val();
         var city = $('#location').val();
+
+        user.updateProfile({
+
+        })
+
+        /*
         var userInfoKey = firebase.database().ref().child('users').push().key;
         firebase.database().ref('Users/'+ userInfoKey).set({
             FirstName:firstName,
@@ -26,6 +37,7 @@ $(function() {
             Email:email,
             Location:city,
         });
+        */
         e.preventDefault();
     });
 });
