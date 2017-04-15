@@ -1,14 +1,20 @@
 //Autofills field based on previous data in database for user settings
 $(document).ready(function () {
-    var user = firebase.auth().currentUser;
-    var name, uid;
+    firebase.auth().onAuthStateChanged(function(user){
+      if (user) {
+        var user = firebase.auth().currentUser;
+        var name, uid;
 
-    if (user != null) {
-      name = user.displayName;
-      uid = user.uid;
-    }
-
-    document.getElementById('#name_field').value = name;
+        name = user.displayName;
+        uid = user.uid;
+        
+        // TODO: There is currently an error with getElementById (returns null)
+        //document.getElementById('#name_field').value = name;
+      }
+      else {
+        console.log("error");
+      }
+    });
 });
 
 //Saves user data to the data base
