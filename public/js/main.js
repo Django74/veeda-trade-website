@@ -267,10 +267,68 @@ function retrieveData(){
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
-			var imgId = document.getElementById('test1');
-			var title = document.getElementById('title');
-			imgId.src= childSnapshot.val().Source;
-			title.text= childSnapshot.val().Title;
+			var childData = childSnapshot.val();//get car data
+			
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+
+			//add to recent posts
+			addRecentPosts(title, description, imageSource);
 		});
 	});
+}
+
+//adds one recent post to recent post section
+function addRecentPosts(title, description,imageSource){
+	//if no picture, use default
+	if(imageSource == "")
+		imageSource = "images/samplePostImg.png";
+	
+	var html = 
+	['<div class="col-sm-6">',
+		'<div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing">',
+			'<div class="media">',
+				'<a class="pull-left" href="#" target="_parent">',
+					'<img width="365" height="365" alt="image" class="img-responsive" src=',
+					imageSource,
+					'></a>',
+
+				'<div class="clearfix visible-sm"></div>',
+
+				'<div class="media-body fnt-smaller">',
+					'<a href="#" target="_parent"></a>',
+
+					'<h4 class="media-heading">',
+						'<a href="#" target="_parent">',
+						//title variable
+						title,
+						
+						//possible date variable
+						//<small class="pull-right">Posted: Apr 12th 2017</small>
+						'</a></h4>',
+
+
+					'<ul class="list-inline mrg-0 btm-mrg-10 clr-535353">',
+						'<li>Calgary</li>',
+
+						'<li style="list-style: none">|</li>',
+
+						'<li>Alberta</li>',
+
+						'<li style="list-style: none">|</li>',
+
+						'<li>Canada</li>',
+					'</ul>',
+
+					'<p class="hidden-xs">',
+					description,
+					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: </span>',
+				'</div>',
+			'</div>',
+		'</div>',
+	'</div><!--End Column-->',]
+	
+	$('#recentPosts').append(html.join(''));
 }
