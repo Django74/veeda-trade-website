@@ -10,10 +10,15 @@ admin.initializeApp({
 });
 
 // Delete a user
-admin.auth().deleteUser(uid)
-  .then(function() {
-    console.log("Successfully deleted user");
-  })
-  .catch(function(error) {
-    console.log("Error deleting user: ", error);
-  });
+$('#deleteUser').click(function(e) {
+  // TODO: Retrieve uid
+  var uid = document.getElementById('user-id').value;
+
+  admin.auth().deleteUser(uid)
+    .then(function() {
+      console.log("Successfully deleted user");
+    })
+    .catch(function(error) {
+      console.log("Error deleting user: ", error);
+    });
+})
