@@ -243,6 +243,14 @@ $(function() {
 			});
 		}
 		e.preventDefault();
+
+		// Display success message
+		alert('Post has been successfully created!');
+		$('#post-modal').modal('toggle');
+	});
+
+	$('#cancelPost').click(function(e){
+		$('#post-modal').modal('toggle');
 	});
 
 	$('#file').on("change", function(e) {
