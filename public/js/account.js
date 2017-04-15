@@ -7,7 +7,7 @@ $(document).ready(function () {
 
         name = user.displayName;
         uid = user.uid;
-        
+
         // TODO: There is currently an error with getElementById (returns null)
         //document.getElementById('#name_field').value = name;
       }
@@ -22,28 +22,62 @@ $(function() {
     $('#account-info-btn').click(function(e){
         var user = firebase.auth().currentUser;
 
-        var firstName = $('#first_name').val();
-        var lastName = $('#last_name').val();
-        var phone = $('#phone').val();
-        var mobile = $('#mobile').val();
-        var email = $('#email').val();
-        var city = $('#location').val();
+        // Retrieve updated information
+        var newName = document.getElementById('name_field').value;
+        var newEmail = document.getElementById('email_field').value;
+        var newPass = document.getElementById('password_field').value;
+        var verPass = document.getElementById('password2_field').value;
+        var userProvidedPassword = document.getElementById('authPassword').value;
 
-        user.updateProfile({
+        // Re-authenticate user
+        var credential = firebase.auth.EmailAuthProvider.credential(
+          user.email,
+          userProvidedPassword
+        );
 
-        })
-
-        /*
-        var userInfoKey = firebase.database().ref().child('users').push().key;
-        firebase.database().ref('Users/'+ userInfoKey).set({
-            FirstName:firstName,
-            LastName:lastName,
-            Phone:phone,
-            Mobile:mobile,
-            Email:email,
-            Location:city,
+        user.reauthenticate(credential).then(function() {
+          // Update user info along with the database
+          if (newName != "") {
+            user.updateProfile({
+              displayName: newName
+            }).then(function() {
+              var userNameData = {
+                Email: user.email,
+                Name: user.displayName
+              };
+              var updates = {};
+              updates['/Users/' + user.uid] = userNameData;
+              firebase.database().ref().update(updates);
+              alert("Name updated");
+            }), function(error) {
+              alert("Name could not be updated");
+            }
+          }
+          if (newEmail != "") {
+            user.updateEmail(newEmail).then(function() {
+              var userEmailData = {
+                Email: user.email,
+                Name: user.displayName
+              };
+              var updates = {};
+              updates['/Users/' + user.uid] = userEmailData;
+              firebase.database().ref().update(updates);
+              alert("Email updated");
+            }, function(error) {
+              alert("Email could not be updated");
+            });
+          }
+          if (newPass != "" && newPass == verPass) {
+            user.updatePassword(newPass).then(function() {
+              alert("Password updated");
+            }, function(error) {
+              alert("Password could not be updated");
+            });
+          }
+        }, function(error) {
+          console.log("Re-Authentication failed.");
         });
-        */
+
         e.preventDefault();
     });
 });
