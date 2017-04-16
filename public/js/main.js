@@ -295,7 +295,7 @@ function retrieveData(){
 }
 
 //adds one recent post to recent post section
-<<<<<<< HEAD
+
 function addRecentPosts(title, description, imageSource){
 	//if no picture, use default
 	if(imageSource == "")
@@ -387,58 +387,6 @@ function addRecentPosts(title, description, imageSource){
 					)
 			)
 	)
-=======
-function addRecentPosts(title, description,imageSource, phone){
-	//if no picture, use default
-	if(imageSource == "")
-		imageSource = "images/samplePostImg.png";
-
-	var html =
-	['<div class="col-sm-6">',
-		'<div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing">',
-			'<div class="media">',
-				'<a class="pull-left" href="#" target="_parent">',
-					'<img width="365" height="365" alt="image" class="img-responsive" src=',
-					imageSource,
-					'></a>',
-
-				'<div class="clearfix visible-sm"></div>',
-
-				'<div class="media-body fnt-smaller">',
-					'<a href="#" target="_parent"></a>',
-
-					'<h4 class="media-heading">',
-						'<a data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
-						//title variable
-						title,
-
-						//possible date variable
-						//<small class="pull-right">Posted: Apr 12th 2017</small>
-						'</a></h4>',
-
-
-					'<ul class="list-inline mrg-0 btm-mrg-10 clr-535353">',
-						'<li>Calgary</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Alberta</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Canada</li>',
-					'</ul>',
-
-					'<p class="hidden-xs">',
-					description,
-					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: ',
-					phone,
-				'</div>',
-			'</div>',
-		'</div>',
-	'</div><!--End Column-->',]
-
-	$('#recentPosts').append(html.join(''));
 }
 
 function searchInfo(search){
@@ -472,5 +420,4 @@ function searchInfo(search){
 
 function populatePost(){
 
->>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }
