@@ -12,7 +12,7 @@ admin.initializeApp({
 // Delete a user
 $('#deleteUser').click(function(e) {
   // TODO: Retrieve uid
-  var uid = document.getElementById('user-id').value;
+  var uid = document.getElementById('some-user-id').value;
 
   admin.auth().deleteUser(uid)
     .then(function() {
