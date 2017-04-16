@@ -3,17 +3,22 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+	authCheck = true;
 
 	// Check for if a user is signed in
 	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			$("#accountElem").removeAttr('hidden');
-			$("#logoutElem").removeAttr('hidden');
+		console.log(authCheck);
+		if (authCheck == true){
+			authCheck = false;
+			if (user) {
+				$("#accountElem").removeAttr('hidden');
+				$("#logoutElem").removeAttr('hidden');
 
-			$("#welcome-txt").append(user.displayName + '.');
-			$("#welcomeElem").removeAttr('hidden');
-		} else {
-			$("#loginElem").removeAttr('hidden');
+				$("#welcome-txt").append(user.displayName + '.');
+				$("#welcomeElem").removeAttr('hidden');
+			} else {
+				$("#loginElem").removeAttr('hidden');
+			}
 		}
 	});
 
@@ -433,11 +438,11 @@ $(function() {
 		});
 
 	});
-	
+
 	$('#showDialog').click(function(e) {
 		viewUserPosts();
 	});
-	
+
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
@@ -447,16 +452,16 @@ $(function() {
 		console.log(currentTitle + "this is the furniturepost modal show function");
 		populateFurniturePost(currentTitle); //populate post with our data
 	});
-	
+
 	$('#closeVehicleModal').click(function(){
 		$('#viewPost-modal').modal('toggle');
 	});
-	
-	
+
+
 	$('#closeFurnitureModal').click(function(){
 		$('#viewFurniturePost-modal').modal('toggle');
 	});
-	
+
 });
 
 //current title of post to be viewed
@@ -777,8 +782,8 @@ function viewUserPosts(){
 			}
 		});
 	});
-	
-	
+
+
 
 }
 
