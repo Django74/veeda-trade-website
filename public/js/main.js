@@ -170,6 +170,8 @@ $(function() {
 		var status;
 		var url;
 		var downloadURL;
+		var sellerPhone = $('#sellerPhone').val();
+		var sellerAddress = $('#sellerAddress').val();
 		var year = $('#year').val();
 		var title = $('#title').val();
 		var price = $('#price').val();
@@ -221,6 +223,8 @@ $(function() {
 			  downloadURL = uploadTask.snapshot.downloadURL;
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
+				Phone: sellerPhone,
+				Address: sellerAddress,
 				Year:year,
 				Title:title,
 				Kilometers:km,
@@ -237,6 +241,8 @@ $(function() {
 			downloadURL = "";
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
+				Phone: sellerPhone,
+				Address: sellerAddress,
 				Year:year,
 				Title:title,
 				Kilometers:km,
@@ -274,25 +280,26 @@ function retrieveData(){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
 			var childData = childSnapshot.val();//get car data
-			
+
 			//retrieve car post info
 			var title = childData.Title;
 			var description = childData.Description;
 			var imageSource = childData.Source;
+			var phone = childData.Phone;
 
 			//add to recent posts
-			addRecentPosts(title, description, imageSource);
+			addRecentPosts(title, description, imageSource, phone);
 		});
 	});
 }
 
 //adds one recent post to recent post section
-function addRecentPosts(title, description,imageSource){
+function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
-	
-	var html = 
+
+	var html =
 	['<div class="col-sm-6">',
 		'<div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing">',
 			'<div class="media">',
@@ -307,10 +314,10 @@ function addRecentPosts(title, description,imageSource){
 					'<a href="#" target="_parent"></a>',
 
 					'<h4 class="media-heading">',
-						'<a href="#" target="_parent">',
+						'<a data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
 						//title variable
 						title,
-						
+
 						//possible date variable
 						//<small class="pull-right">Posted: Apr 12th 2017</small>
 						'</a></h4>',
@@ -330,12 +337,13 @@ function addRecentPosts(title, description,imageSource){
 
 					'<p class="hidden-xs">',
 					description,
-					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: </span>',
+					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: ',
+					phone,
 				'</div>',
 			'</div>',
 		'</div>',
 	'</div><!--End Column-->',]
-	
+
 	$('#recentPosts').append(html.join(''));
 }
 
@@ -366,4 +374,7 @@ function searchInfo(search){
 			}
 		});
 	});
+	
+function populatePost(){
+	
 }

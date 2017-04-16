@@ -103,7 +103,7 @@
             </div>
 
             <div id="recentPosts" class="row">
-                
+
             </div><!-- End row -->
         </div><!-- End container -->
     </div>
@@ -201,6 +201,25 @@
     				<span class="help-block">Field not entered!</span>
     			</div> -->
           <div class="panel-body">
+
+            <h4><b>Seller Information</b></h4>
+
+            <hr>
+
+            <div class="form-group">
+              <label for="title">Phone Number <span class="require">*</span></label>
+              <input id="sellerPhone" type="text" class="form-control" name="title" />
+            </div>
+
+            <div class="form-group">
+              <label for="title">Address <span class="require">*</span></label>
+              <input id="sellerAddress" type="text" class="form-control" name="title" />
+            </div>
+
+            <hr>
+
+            <h4><b>Item Information</b></h4>
+            <hr>
 
     			<div class="form-group">
     				<label for="title">Title <span class="require">*</span></label>
@@ -344,7 +363,142 @@
     	</div>
     </div>
     </div>
+</div>
+    <div class="modal fade" id="viewPost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="container">
+      <div class="row">
 
+          <div class="col-md-8 col-md-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+                  <h2>Post Title Here</h2>
+                </div>
+
+                  <br>
+                  <div class="panel-body">
+                <h4>Seller Information</h4>
+                <hr>
+              <div class="col-md-6">
+
+
+                <table class="table">
+
+                  <tbody>
+
+                       <!-- Colors for different row information
+                    <tr class="success">
+                      <td>Email :</td>
+                      <td>User Email Here</td>
+
+                    </tr>
+                    <tr class="danger">
+                      <td>Lift Date</td>
+                      <td>20/01/2016</td>
+
+                    </tr>
+                    <tr class="info">
+                      <td>Buyer' Name</td>
+                      <td>Dooley Singh</td>
+
+                    </tr>
+                    <tr class="warning">
+                      <td>Insured Name</td>
+                      <td>S.S Singh</td>
+
+                     -->
+
+                    </tr>
+                    <tr class="active">
+                      <td>Name: </td>
+                      <td>Seller Name Here </td>
+
+                    </tr>
+                    </tr>
+                    <tr class="active">
+                      <td>Email: </td>
+                      <td>Seller Email Here</td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="col-md-6"><img class="img-responsive" src="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" /></div>
+
+              </div>
+
+              <hr>
+
+              <div class="container">
+                  <h4>Vehicle Information</h4>
+                <hr>
+              <div class="col-md-6">
+                 <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th>Status</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Price: </td>
+                      <td>$Price Information</td>
+
+                    </tr>
+
+                    <tr>
+                      <td>Status: </td>
+                      <td>Status Information</td>
+
+                    </tr>
+
+                    <tr>
+                      <td>Year: </td>
+                      <td>Year Information</td></td>
+
+                    </tr>
+                    <tr>
+                      <td>Make: </td>
+                      <td>Make Information</td>
+                    </tr>
+
+                    <tr>
+                      <td>Model: </td>
+                      <td>Model Information</td>
+
+                    </tr>
+                    <tr>
+                      <td>Color: </td>
+                      <td>Color Information</td></td>
+
+                    </tr>
+                    <tr>
+                      <td>Kilometers</td>
+                      <td>Kilometer Information</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              </div>
+
+              <div class="container">
+                  <h4>Description</h4>
+                <hr>
+              <div class="col-md-6">
+              	<p>Description here</p>
+              </div>
+
+          </div>
+
+      		</div>
+
+      	</div>
+      </div>
+      </div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/bootstrap.min.js"></script>
