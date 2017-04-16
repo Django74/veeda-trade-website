@@ -663,18 +663,7 @@ function populatePost(currentTitle){
 				var model = childData.Model;
 				var color = childData.Color;
 				var price = childData.Price;
-
-				var database = firebase.database();
-				database.ref('Users/' + userId).on('value', function(snapshot) {
-					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
-					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
-				});
-				
-				//get user Info
-				userId = childData.User;
 			
-				
-				
 				//populate post
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
@@ -687,13 +676,10 @@ function populatePost(currentTitle){
 				$('#carColor td:nth-child(2)').text(color);
 				$('#carKm td:nth-child(2)').text(km);
 				
-				database.ref('Users/' + userId).once('value').then(function(snapshot){
-					//console.log('Users/' + userId);
-						var userEmail=snapshot.val().Email;
-						var userName=snapshot.val().Name;
-					
-					$('#sellerEmail td:nth-child(2)').text(userEmail);
-					$('#sellerName td:nth-child(2)').text(userName);
+				//populate username and email
+				database.ref('Users/' + childData.User).on('value', function(snapshot) {
+					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
+					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
 				});
 				//end loop
 				return true;
