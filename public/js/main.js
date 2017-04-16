@@ -548,12 +548,13 @@ function searchInfo(search){
 			var phone = childData.Phone;
 			var make = childData.Make;
 			var model = childData.Model;
+			var postCategory = childData.Category;
 
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
-				addRecentPosts(title, description, imageSource, phone);
+				addRecentPosts(title, description, imageSource, phone, postCategory);
 			}
 			if (foundResult == false){
 				$('#postsText').text("No search results");
@@ -574,13 +575,14 @@ function searchInfo(search){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
+			var postCategory = childData.Category;
 
 
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
-				addRecentPosts(title, description, imageSource, phone);
+				addRecentPosts(title, description, imageSource, phone, postCategory);
 			}
 			if (foundResult == false){
 				$('#postsText').text("No search results");
