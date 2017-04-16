@@ -372,6 +372,50 @@ $(function() {
 		noImage = false;
 	});
 
+	$('#viewFurniturePosts').click(function(e) {
+		$('#recentPosts').empty();
+		var database = firebase.database();
+		database.ref('Posts/Furniture').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				$('#postsText').text("Furniture posts");
+				//retrieve car post info
+				var title = childData.Title;
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var postCategory = childData.Category;
+				var price = childData.Price;
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
+
+			});
+		});
+
+	});
+	
+	$('#viewVehiclePosts').click(function(e) {
+		$('#recentPosts').empty();
+		var database = firebase.database();
+		database.ref('Posts/Cars').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				$('#postsText').text("Vehicle posts");
+				//retrieve car post info
+				var title = childData.Title;
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var postCategory = childData.Category;
+				var price = childData.Price;
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
+			});
+		});
+	
+	});
+	
+	
 
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
