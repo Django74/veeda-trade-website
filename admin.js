@@ -47,9 +47,16 @@ io.on('connection', function(socket){
         .then(function() {
           // Remove user's database entry
           var db = admin.database();
-          var ref = db.ref("restricted_access/secret_document")
+          var ref = db.ref("Users/" + uid);
+          ref.remove()
+            .then(function() {
+              console.log("Removed from database...");
+            })
+            .catch(function(error) {
+              console.log("Could not remove from database...");
+            });
 
-          console.log("Successfully deleted user");
+          console.log("Deleted user account");
           io.emit('delUserAcc', uid);
         })
         .catch(function(error) {
