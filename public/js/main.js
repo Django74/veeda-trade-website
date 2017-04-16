@@ -39,6 +39,12 @@ $(function() {
       console.log("An error occurred with signing out.");
     });
   });
+  
+ 	$('#searchButton').click(function(e) {
+		var searchText = $('#searchBox').val();
+		searchInfo(searchText);
+		e.preventDefault();
+	});
 
 	$('#register-form').on('submit', function () {
     var username = document.getElementById('register-username').value;
@@ -331,4 +337,33 @@ function addRecentPosts(title, description,imageSource){
 	'</div><!--End Column-->',]
 	
 	$('#recentPosts').append(html.join(''));
+}
+
+function searchInfo(search){
+	$('#recentPosts').empty();
+	var foundResult = false;
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+			var text = search.toLowerCase();
+			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
+				//add to recent posts
+				foundResult = true;
+				addRecentPosts(title, description, imageSource);
+			}
+			if (foundResult == false){
+				$('#postsText').text("No search results");
+			}
+			else{
+				$('#postsText').text("Search results");
+			}
+		});
+	});
 }
