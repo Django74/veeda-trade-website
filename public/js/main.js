@@ -692,7 +692,7 @@ function populatePost(currentTitle){
 				$('#carMake td:nth-child(2)').text(make);
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
-				$('#carKm td:nth-child(2)').text(km);
+				$('#carKm td:nth-child(2)').text(numberWithCommas(km));
 
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
