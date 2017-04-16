@@ -317,7 +317,12 @@ function retrieveData(){
 */
 //when post is clicked
 
+
+
+
+
 //adds one recent post to recent post section
+<<<<<<< HEAD
 function addRecentPosts(title, description, imageSource){
 	//if no picture, use default
 	if(imageSource == "")
@@ -409,7 +414,7 @@ function addRecentPosts(title, description, imageSource){
 					)
 			)
 	)
-
+=======
 function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -462,6 +467,8 @@ function addRecentPosts(title, description,imageSource, phone){
 
 	$('#recentPosts').append(html.join(''));
 }
+<<<<<<< HEAD
+=======
 
 function searchInfo(search){
 	$('#recentPosts').empty();
@@ -494,4 +501,6 @@ function searchInfo(search){
 
 function populatePost(){
 
+>>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }
+>>>>>>> 5dc7d2123240e2b7c8eedc97d78557dbda20afb2

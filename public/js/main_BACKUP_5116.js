@@ -1,5 +1,4 @@
 $(function() {
-
 	var selectedFile;
 	var postArray;
 	var noImage = true;
@@ -273,21 +272,8 @@ $(function() {
 	});
 
 
-
-	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
-		console.log("I want this to appear after the modal has opened!");
-		console.log(currentTitle);
-		//console.log("hi");
-	//	console.log($(e.target).text());
-	});
 });
 
-
-var currentTitle;
-
-function saveTitle(title){
-	currentTitle = title;
-}
 function retrieveData(){
 	var database = firebase.database();
 
@@ -306,18 +292,10 @@ function retrieveData(){
 			addRecentPosts(title, description, imageSource, phone);
 		});
 	});
-
-
-
 }
-/*$('#postTitle').click(function(e){
-	console.log($(e.target).text());
-	console.log("hi");
-});
-*/
-//when post is clicked
 
 //adds one recent post to recent post section
+<<<<<<< HEAD
 function addRecentPosts(title, description, imageSource){
 	//if no picture, use default
 	if(imageSource == "")
@@ -409,7 +387,7 @@ function addRecentPosts(title, description, imageSource){
 					)
 			)
 	)
-
+=======
 function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -430,7 +408,7 @@ function addRecentPosts(title, description,imageSource, phone){
 					'<a href="#" target="_parent"></a>',
 
 					'<h4 class="media-heading">',
-						'<a id="postTitle" onclick="saveTitle(this.text);" return false;" data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
+						'<a data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
 						//title variable
 						title,
 
@@ -494,4 +472,5 @@ function searchInfo(search){
 
 function populatePost(){
 
+>>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }
