@@ -416,6 +416,10 @@ $(function() {
 	});
 	
 	
+	$('#showDialog').click(function(e) {
+		viewUserPosts();
+	});
+	
 
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
@@ -594,9 +598,10 @@ function searchInfo(search){
 			var model = childData.Model;
 			var postCategory = childData.Category;
 			var price = childData.Price;
+			var status = childData.Status;
 
 			var text = search.toLowerCase();
-			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
+			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text) || status.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
 				addRecentPosts(title, description, imageSource, phone, postCategory, price);
@@ -731,7 +736,23 @@ function populateFurniturePost(currentTitle){
 			}
 		});
 	});
+}
 
-
+function viewUserPosts(){
+	var user = firebase.auth().currentUser;
+	var userId = user.uid;
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			if (childData.User == userId){
+				// populate myaccount with user posts
+				console.log("vincents gay");
+			}
+		});
+	});
+	
+	
 
 }
