@@ -698,6 +698,7 @@ function populatePost(currentTitle){
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
 				//end loop
 				return true;
@@ -740,6 +741,7 @@ function populateFurniturePost(currentTitle){
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
 				//end loop
 				return true;
@@ -754,4 +756,8 @@ function populateFurniturePost(currentTitle){
 //function to replace number with commas
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function phoneNumberWithDashes(phone){
+	return phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 }
