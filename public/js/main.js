@@ -372,6 +372,12 @@ $(function() {
 		populatePost(currentTitle); //populate post with our data
 		
 	});
+	
+	$( "#viewFurniturePost-modal" ).on('show.bs.modal', function(e){
+		console.log(currentTitle + "this is the furniturepost modal show function");
+		populateFurniturePost(currentTitle); //populate post with our data
+		
+	});
 });
 
 //current title of post to be viewed
@@ -618,6 +624,50 @@ function populatePost(currentTitle){
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
 				$('#carKm td:nth-child(2)').text(km);
+				
+				//populate username and email
+				database.ref('Users/' + childData.User).on('value', function(snapshot) {
+					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
+					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+				});
+				//end loop
+				return true;
+			}
+		});
+	});
+
+	
+	
+}
+
+
+//fills data for  furniture post to be viewed
+function populateFurniturePost(currentTitle){
+	var database = firebase.database();
+	
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			var title = childData.Title;
+
+			//if post we want matches post to be viewed
+			if(currentTitle == title)
+			{
+				//retrieve car post info
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var address =childData.Address;
+				var status = childData.Status;
+				var price = childData.Price;
+			
+				//populate post
+				$('#viewFurniturePost-modal h2').text(title);
+				$('#description p').text(description);
+				$('#image img').attr('src', imageSource);
+				$('#furniturePrice td:nth-child(2)').text("$" + price);
+				$('#furnitureStatus td:nth-child(2)').text(status);
 				
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
