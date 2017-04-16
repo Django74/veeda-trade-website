@@ -13,8 +13,10 @@ $(function() {
       $('#userID').val('');
       return false;
     });
-    socket.on('getUserAcc', function(msg){
+    socket.on('getUserAcc', function(email, name){
       // Display user information on page
+      $('#user-name').val(name);
+      $('#user-mail').val(email);
     });
     socket.on('delUserAcc', function(msg){
       // Display deletion result

@@ -4,7 +4,8 @@
   "description": "Trade Website for SENG513",
   "dependencies": {
     "express": "^4.15.2",
-    "firebase-admin": "^4.2.1"
+    "firebase-admin": "^4.2.1",
+    "socket.io": "^1.7.3"
   },
   "scripts": {}
 }

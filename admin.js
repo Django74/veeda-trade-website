@@ -8,11 +8,35 @@ http.listen(port, function() {
   console.log('Listening on port ', port);
 });
 
-app.use(express.static(__dirname));
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/admin.html');
+})
 
 io.on('connection', function(socket){
-  socket.on('getUserAcc', function(msg){
-    io.emit('getUserAcc', msg);
+  // Add Firebase Admin SDK
+  var admin = require("firebase-admin");
+
+  // Initialize the SDK
+  var serviceAccount = require("veeda-8bc58-firebase-adminsdk-1qjy6-70120435dd.json");
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://veeda-8bc58.firebaseio.com"
+  });
+
+  socket.on('getUserAcc', function(uid){
+    // Get user info
+    admin.auth().getUser(uid)
+      .then(function(userRecord) {
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log("Successfully fetched user data:", userRecord.toJSON());
+        var email = userRecord.email;
+        var name = userRecord.displayName;
+        io.emit('getUserAcc', email, name);
+      })
+      .catch(function(error) {
+        console.log("Error fetching user data:", error);
+      });
   });
 });
 
