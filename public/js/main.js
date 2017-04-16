@@ -168,7 +168,7 @@ $(function() {
 	}
 	});
 
-	$('#create').click(function(e){
+	$('#createVehiclePost').click(function(e){
 		var status;
 		var url;
 		var downloadURL;
@@ -262,18 +262,109 @@ $(function() {
 
 		// Display success message
 		alert('Post has been successfully created!');
-		$('#post-modal').modal('toggle');
+		$('#createVehiclePost-modal').modal('toggle');
 	});
 
-	$('#cancelPost').click(function(e){
-		$('#post-modal').modal('toggle');
+	$('#createFurniturePost').click(function(e){
+		var status;
+		var url;
+		var downloadURL;
+		var sellerPhone = $('#sellerFurniturePhone').val();
+		var sellerAddress = $('#sellerFurnitureAddress').val();
+		var title = $('#furnitureTitle').val();
+		var price = $('#furniturePrice').val();
+		var used = document.getElementById('furniture-1').checked;
+		var newFurniture = document.getElementById('furniture-0').checked;
+		var damage = document.getElementById('furniture-1').checked;
+		var description = $('#furnitureDescription').val();
+		var newPostKey = firebase.database().ref().child('post').push().key;
+		var user = firebase.auth().currentUser;
+		if (used == true){
+			status = $('#furniture-1').val();
+		} else if( newFurniture == true){
+			status = $('#furniture-0').val();
+		} else {
+			status = $('#furniture-2').val();
+		}
+
+		if(noImage == false){
+			var filename = selectedFile.name;
+			var storageRef = firebase.storage().ref('Posts/Furniture/' + newPostKey +'/' + filename);
+			var uploadTask = storageRef.put(selectedFile);
+
+			// Register three observers:
+			// 1. 'state_changed' observer, called any time the state changes
+			// 2. Error observer, called on failure
+			// 3. Completion observer, called on successful completion
+			uploadTask.on('state_changed', function(snapshot){
+			  // Observe state change events such as progress, pause, and resume
+			  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+			  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			  console.log('Upload is ' + progress + '% done');
+			  switch (snapshot.state) {
+				case firebase.storage.TaskState.PAUSED: // or 'paused'
+				  console.log('Upload is paused');
+				  break;
+				case firebase.storage.TaskState.RUNNING: // or 'running'
+				  console.log('Upload is running');
+				  break;
+			  }
+			}, function(error) {
+			  // Handle unsuccessful uploads
+			}, function() {
+			  // Handle successful uploads on complete
+			  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+			  downloadURL = uploadTask.snapshot.downloadURL;
+			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
+				Source: downloadURL,
+				Phone: sellerPhone,
+				Address: sellerAddress,
+				Title:title,
+				Status:status,
+				Description:description,
+				User: user.uid,
+				Price: price,
+			});
+			});
+		}
+		else{
+			downloadURL = "";
+			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
+				Source: downloadURL,
+				Phone: sellerPhone,
+				Address: sellerAddress,
+				Title:title,
+				Status:status,
+				Description:description,
+				User: user.uid,
+				Price: price,
+			});
+		}
+		e.preventDefault();
+
+		// Display success message
+		alert('Post has been successfully created!');
+		$('#createFurniturePost-modal').modal('toggle');
+	
+	
+	});
+	$('#cancelVehiclePost').click(function(e){
+		$('#createVehiclePost-modal').modal('toggle');
 	});
 
-	$('#file').on("change", function(e) {
+	$('#cancelFurniturePost').click(function(e){
+		$('#createFurniturePost-modal').modal('toggle');
+	});
+	
+	$('#vehicleFile').on("change", function(e) {
 		selectedFile = e.target.files[0];
 		noImage = false;
 	});
 
+	$('#furnitureFile').on("change", function(e) {
+		selectedFile = e.target.files[0];
+		noImage = false;
+	});
 
 
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
@@ -311,7 +402,22 @@ function retrieveData(){
 		});
 	});
 
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			childData = childSnapshot.val();//get car data
 
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+			var phone = childData.Phone;
+
+			//add to recent posts
+			addRecentPosts(title, description, imageSource, phone);
+		});
+	});
+	
 
 }
 
