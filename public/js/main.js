@@ -416,7 +416,7 @@ function addRecentPosts(title, description, imageSource, phone){
 	)
 }*/
 
-function addRecentPosts(title, description,imageSource, phone){
+function addRecentPosts(title, description, imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
@@ -482,11 +482,13 @@ function searchInfo(search){
 			var title = childData.Title;
 			var description = childData.Description;
 			var imageSource = childData.Source;
+			var phone = childData.Phone;
+			
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
-				addRecentPosts(title, description, imageSource);
+				addRecentPosts(title, description, imageSource, phone);
 			}
 			if (foundResult == false){
 				$('#postsText').text("No search results");
