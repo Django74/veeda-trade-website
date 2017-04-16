@@ -3,13 +3,11 @@ $(document).ready(function () {
     firebase.auth().onAuthStateChanged(function(user){
       if (user) {
         var user = firebase.auth().currentUser;
-        var name, uid;
+        var name;
 
         name = user.displayName;
-        uid = user.uid;
 
-        // TODO: There is currently an error with getElementById (returns null)
-        //document.getElementById('#name_field').value = name;
+        $("#username-display").html(name);
       }
       else {
         console.log("error");
