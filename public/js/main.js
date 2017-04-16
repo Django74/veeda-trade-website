@@ -409,8 +409,9 @@ function retrieveData(){
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
 			var postCategory = childData.Category;
+			var price = childData.Price;
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone, postCategory);
+			addRecentPosts(title, description, imageSource, phone, postCategory, price);
 		});
 	});
 
@@ -425,9 +426,10 @@ function retrieveData(){
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
 			var postCategory = childData.Category;
+			var price = childData.Price;
 
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone, postCategory);
+			addRecentPosts(title, description, imageSource, phone, postCategory, price);
 		});
 	});
 
@@ -435,7 +437,7 @@ function retrieveData(){
 }
 
 //adds one recent post to recent post section
-function addRecentPosts(title, description, imageSource, phone, postCategory){
+function addRecentPosts(title, description, imageSource, phone, postCategory, price){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
@@ -509,23 +511,7 @@ function addRecentPosts(title, description, imageSource, phone, postCategory){
 									.addClass("list-inline mrg-0 btm-mrg-10 clr-535353")
 									.append(
 										$('<li/>')
-										.html("Calgary")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Alberta")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Canada")
+										.html('<font color="green">' + "$" + price + '</font>')
 									)
 							)
 							//Description
