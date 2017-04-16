@@ -555,7 +555,7 @@ function addRecentPosts(title, description, imageSource, phone, postCategory, pr
 									.addClass("list-inline mrg-0 btm-mrg-10 clr-535353")
 									.append(
 										$('<li/>')
-										.html('<font color="green">' + "$" + price + '</font>')
+										.html('<font color="green">' + "$" + numberWithCommas(price) + '</font>')
 									)
 							)
 							//Description
@@ -669,7 +669,7 @@ function populatePost(currentTitle){
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
-				$('#carPrice td:nth-child(2)').text("$" + price);
+				$('#carPrice td:nth-child(2)').text("$" + numberWithCommas(price));
 				$('#carStatus td:nth-child(2)').text(status);
 				$('#carYear td:nth-child(2)').text(year);
 				$('#carMake td:nth-child(2)').text(make);
@@ -718,7 +718,7 @@ function populateFurniturePost(currentTitle){
 				$('#viewFurniturePost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
-				$('#furniturePrice td:nth-child(2)').text("$" + price);
+				$('#furniturePrice td:nth-child(2)').text("$" + numberWithCommas(price));
 				$('#furnitureStatus td:nth-child(2)').text(status);
 
 				//populate username and email
@@ -734,4 +734,9 @@ function populateFurniturePost(currentTitle){
 
 
 
+}
+
+//function to replace number with commas
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
