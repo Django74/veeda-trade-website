@@ -318,7 +318,6 @@ function retrieveData(){
 //when post is clicked
 
 //adds one recent post to recent post section
-<<<<<<< HEAD
 function addRecentPosts(title, description, imageSource){
 	//if no picture, use default
 	if(imageSource == "")
@@ -410,7 +409,7 @@ function addRecentPosts(title, description, imageSource){
 					)
 			)
 	)
-=======
+
 function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -495,5 +494,4 @@ function searchInfo(search){
 
 function populatePost(){
 
->>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }
