@@ -56,17 +56,23 @@
                     </div>
                     <button class="btn btn-default" id="searchButton">Submit</button>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id="welcomeElem" hidden>
+                  <li>
+                      <h5 class="text-primary" id="welcome-txt">Welcome, </h5>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="accountElem" hidden>
                     <li>
                         <a href="account-details.html" id="showDialog">My Account</a>
                     </li>
                 </ul>
                 <div id="dialog"></div>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id="loginElem" hidden>
                     <li>
                         <a data-toggle="modal" href="#login-pageModal" data-target="#login-modal">Sign In</a>
                     </li>
                 </ul>
+                <!-- Debugging button
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                       <button id="getUser" class="btn btn-primary" >
@@ -74,7 +80,8 @@
                       </button>>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+              -->
+                <ul class="nav navbar-nav navbar-right" id="logoutElem" hidden>
                     <li>
                       <button id="logout-button" class="btn btn-primary" >
                         LOGOUT

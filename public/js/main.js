@@ -3,6 +3,20 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+
+	// Check for if a user is signed in
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			$("#accountElem").removeAttr('hidden');
+			$("#logoutElem").removeAttr('hidden');
+
+			$("#welcome-txt").append(user.displayName + '.');
+			$("#welcomeElem").removeAttr('hidden');
+		} else {
+			$("#loginElem").removeAttr('hidden');
+		}
+	});
+
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -19,6 +33,7 @@ $(function() {
 		e.preventDefault();
 	});
 
+	/* Debugging purposes
   $('#getUser').click(function(e) {
     // Get user information
     var user = firebase.auth().currentUser;
@@ -31,11 +46,13 @@ $(function() {
     console.log(email);
     console.log(uid);
   })
+	*/
 
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sign out successful.");
+			location.reload();
     }).catch(function(error) {
       // An error happened.
       console.log("An error occurred with signing out.");
@@ -130,6 +147,7 @@ $(function() {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(function() {
 			alert('Login successful!');
+			location.reload();
 		})
 		.catch(function(error) {
 			// Error Handling
@@ -158,6 +176,7 @@ $(function() {
     return false;
 	});
 
+	/* For debugging
 	firebase.auth().onAuthStateChanged(function(user) {
 	if(user) {
 		console.log(user);
@@ -166,7 +185,7 @@ $(function() {
 	else {
 		console.log("No user signed in.");
 	}
-	});
+});*/
 
 	$('#createVehiclePost').click(function(e){
 		var status;
@@ -393,7 +412,7 @@ $(function() {
 		});
 
 	});
-	
+
 	$('#viewVehiclePosts').click(function(e) {
 		$('#recentPosts').empty();
 		var database = firebase.database();
@@ -412,21 +431,19 @@ $(function() {
 				addRecentPosts(title, description, imageSource, phone, postCategory, price);
 			});
 		});
-	
+
 	});
-	
-	
+
+
 
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
-
 	});
 
 	$( "#viewFurniturePost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle + "this is the furniturepost modal show function");
 		populateFurniturePost(currentTitle); //populate post with our data
-
 	});
 });
 
@@ -687,8 +704,6 @@ function populatePost(currentTitle){
 			}
 		});
 	});
-
-
 
 }
 

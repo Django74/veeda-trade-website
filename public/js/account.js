@@ -46,9 +46,10 @@ $(function() {
               var updates = {};
               updates['/Users/' + user.uid] = userNameData;
               firebase.database().ref().update(updates);
-              alert("Name updated");
+              alert("User updated");
+        			location.reload();
             }), function(error) {
-              alert("Name could not be updated");
+              alert("User could not be updated");
             }
           }
           if (newEmail != "") {
@@ -60,20 +61,24 @@ $(function() {
               var updates = {};
               updates['/Users/' + user.uid] = userEmailData;
               firebase.database().ref().update(updates);
-              alert("Email updated");
+              alert("User updated");
+        			location.reload();
             }, function(error) {
-              alert("Email could not be updated");
+              alert("User could not be updated");
             });
           }
           if (newPass != "" && newPass == verPass) {
             user.updatePassword(newPass).then(function() {
-              alert("Password updated");
+              alert("User updated");
+        			location.reload();
             }, function(error) {
-              alert("Password could not be updated");
+              alert("User could not be updated");
             });
           }
+          $("#registrationForm")[0].reset()
         }, function(error) {
           console.log("Re-Authentication failed.");
+          $("#registrationForm")[0].reset()
         });
 
         e.preventDefault();
