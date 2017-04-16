@@ -585,7 +585,7 @@ function addRecentPosts(title, description, imageSource, phone, postCategory, pr
 							.append(
 								$('<span/>')
 									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact: " + phone)
+									.html("Contact: " + phoneNumberWithDashes(phone))
 							)
 					)
 			)
