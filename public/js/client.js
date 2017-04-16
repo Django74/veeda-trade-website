@@ -1,22 +1,27 @@
 $(function() {
     var socket = io();
-    $('#adminForm').submit(function(){
-      if ($_POST['actionUsr'] == "GET USER INFO") {
+    $('#adminForm button').click(function(e){
+      e.preventDefault()
+      if ($(this).attr("value") == "get-button") {
+        console.log("Testing");
         socket.emit('getUserAcc', $('#userID').val());
       }
-      else if ($_POST['actionUsr'] == "DELETE USER") {
+
+      if ($(this).attr("value") == "del-button") {
         socket.emit('delUserAcc', $('#userID').val());
       }
-      else if ($_POST['actionUsr'] == "TOGGLE USER ACCESS") {
+
+      if ($(this).attr("value") == "tog-button") {
         socket.emit('togUserAcc', $('#userID').val());
       }
+
       $('#userID').val('');
       return false;
     });
     socket.on('getUserAcc', function(email, name){
       // Display user information on page
-      $('#user-name').val(name);
-      $('#user-mail').val(email);
+      $('#user-name').html(name);
+      $('#user-mail').html(email);
     });
     socket.on('delUserAcc', function(msg){
       // Display deletion result

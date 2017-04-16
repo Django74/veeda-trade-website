@@ -19,9 +19,9 @@
           <label for="userID">User ID:</label>
           <input type="text" class="form-control" id="userID">
         </div>
-        <input type="submit" id="getUsr" name="actionUsr" class="btn btn-primary" value="GET USER INFO" />
-        <input type="submit" id="delUsr" name="actionUsr" class="btn btn-primary" value="DELETE USER" />
-        <input type="submit" id="togUsr" name="actionUsr" class="btn btn-primary" value="TOGGLE USER ACCESS" />
+        <button type="submit" id="getUsr" class="btn btn-primary" value="get-button">GET USER INFO</button>
+        <button type="submit" id="delUsr" class="btn btn-primary" value="del-button">DELETE USER</button>
+        <button type="submit" id="togUsr" class="btn btn-primary" value="tog-button">TOGGLE USER ACCESS</button>
       </form>
     </div>
     <div class="row">
@@ -38,6 +38,7 @@
   </div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="js/client.js"></script>
 
 </body>

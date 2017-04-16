@@ -12,19 +12,21 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/admin.html');
 })
 
+app.use(express.static(__dirname + '/public'));
+
+// Add Firebase Admin SDK
+var admin = require("firebase-admin");
+
+// Initialize the SDK
+var serviceAccount = require("veeda-8bc58-firebase-adminsdk-1qjy6-70120435dd.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://veeda-8bc58.firebaseio.com"
+});
+
 io.on('connection', function(socket){
-  // Add Firebase Admin SDK
-  var admin = require("firebase-admin");
-
-  // Initialize the SDK
-  var serviceAccount = require("veeda-8bc58-firebase-adminsdk-1qjy6-70120435dd.json");
-
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://veeda-8bc58.firebaseio.com"
-  });
-
-  socket.on('getUserAcc', function(uid){
+    socket.on('getUserAcc', function(uid){
     // Get user info
     admin.auth().getUser(uid)
       .then(function(userRecord) {
