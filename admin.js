@@ -27,19 +27,78 @@ admin.initializeApp({
 
 io.on('connection', function(socket){
     socket.on('getUserAcc', function(uid){
-    // Get user info
-    admin.auth().getUser(uid)
-      .then(function(userRecord) {
-        // See the UserRecord reference doc for the contents of userRecord.
-        console.log("Successfully fetched user data:", userRecord.toJSON());
-        var email = userRecord.email;
-        var name = userRecord.displayName;
-        io.emit('getUserAcc', email, name);
-      })
-      .catch(function(error) {
-        console.log("Error fetching user data:", error);
-      });
-  });
+      // Get user info
+      admin.auth().getUser(uid)
+        .then(function(userRecord) {
+          // See the UserRecord reference doc for the contents of userRecord.
+          console.log("Successfully fetched user data:", userRecord.toJSON());
+          var email = userRecord.email;
+          var name = userRecord.displayName;
+          io.emit('getUserAcc', email, name);
+        })
+        .catch(function(error) {
+          console.log("Error fetching user data:", error);
+        });
+    });
+
+    socket.on('delUserAcc', function(uid){
+      // Delete corresponding user
+      admin.auth().deleteUser(uid)
+        .then(function() {
+          // Remove user's database entry
+          var db = admin.database();
+          var ref = db.ref("Users/" + uid);
+          ref.remove()
+            .then(function() {
+              console.log("Removed from database...");
+            })
+            .catch(function(error) {
+              console.log("Could not remove from database...");
+            });
+
+          console.log("Deleted user account");
+          io.emit('delUserAcc', uid);
+        })
+        .catch(function(error) {
+          console.log("Error deleting user:", error);
+        });
+    });
+
+    socket.on('togUserAcc', function(uid){
+      // Retrieve user info to find if they are currently disabled or not
+      admin.auth().getUser(uid)
+        .then(function(userRecord) {
+          console.log("Successfully fetched user data:", userRecord.toJSON());
+          // Disable user
+          if (userRecord.disabled == false) {
+            admin.auth().updateUser(uid, {
+              disabled: true
+            })
+              .then(function(userRecord) {
+                console.log("Successfully updated user", userRecord.toJSON());
+                io.emit('togUserAcc', 'disabled');
+              })
+              .catch(function(error) {
+                console.log("Error updating user:", error);
+              });
+          }
+          else {
+            admin.auth().updateUser(uid, {
+              disabled: false
+            })
+              .then(function(userRecord) {
+                console.log("Successfully updated user", userRecord.toJSON());
+                io.emit('togUserAcc', 'enabled');
+              })
+              .catch(function(error) {
+                console.log("Error updating user:", error);
+              });
+          }
+        })
+        .catch(function(error) {
+          console.log("Error fetching user data:", error);
+        });
+    })
 });
 
 /*

@@ -3,7 +3,6 @@ $(function() {
     $('#adminForm button').click(function(e){
       e.preventDefault()
       if ($(this).attr("value") == "get-button") {
-        console.log("Testing");
         socket.emit('getUserAcc', $('#userID').val());
       }
 
@@ -23,10 +22,12 @@ $(function() {
       $('#user-name').html(name);
       $('#user-mail').html(email);
     });
-    socket.on('delUserAcc', function(msg){
+    socket.on('delUserAcc', function(uid){
       // Display deletion result
+      alert("Account with uid " + uid + " deleted!");
     });
     socket.on('togUserAcc', function(msg){
       // Display toggle result
+      alert("User has been successfully " + msg + "!");
     });
 });
