@@ -25,6 +25,21 @@ var server = http.createServer(function(req, res) {
     .catch(function(error) {
       console.log("Error fetching user data:", error);
     });
+
+  // When Get User is clicked
+  $('#getUsr').click(function() {
+    // Obtain user results and display on page.
+  })
+
+  // When Delete User is clicked
+  $('#delUsr').click(function() {
+    // Delete user
+  })
+
+  // When Toggle User is clicked
+  $('#togUsr').click(function() {
+    // Toggle user access
+  })
 });
 
 server.listen(3000);
