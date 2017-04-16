@@ -318,7 +318,7 @@ function retrieveData(){
 //when post is clicked
 
 //adds one recent post to recent post section
-/*
+
 function addRecentPosts(title, description, imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -365,12 +365,12 @@ function addRecentPosts(title, description, imageSource, phone){
 									.addClass("media-heading")
 									.append(
 										$('<a/>')
-										//.attr("href", "#"viewPost-modal)
-										//.attr("id", "postTitle")
-										//.attr("target", "_parent")
-										//.attr("onclick", "saveTitle(this.text);" return false;)
-										//.attr("data-toggle", "modal")
-										//.attr("data-target", "#viewPost-modal")
+										.attr("href", "#viewPost-modal")
+										.attr("id", "postTitle")
+										.attr("target", "_parent")
+										.attr("onclick", "saveTitle(this.text);")
+										.attr("data-toggle", "modal")
+										.attr("data-target", "#viewPost-modal")
 										.html(title)
 									)
 							)
@@ -409,13 +409,14 @@ function addRecentPosts(title, description, imageSource, phone){
 							.append(
 								$('<span/>')
 									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact: " phone)
+									.html("Contact: " + phone)
 							)
 					)
 			)
 	)
-}*/
-
+}
+// LEGACY CODE
+/*
 function addRecentPosts(title, description, imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -436,7 +437,7 @@ function addRecentPosts(title, description, imageSource, phone){
 					'<a href="#" target="_parent"></a>',
 
 					'<h4 class="media-heading">',
-						'<a id="postTitle" onclick="saveTitle(this.text);" return false;" data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
+						'<a id="postTitle" onclick="saveTitle(this.text);" data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
 						//title variable
 						title,
 
@@ -468,7 +469,7 @@ function addRecentPosts(title, description, imageSource, phone){
 
 	$('#recentPosts').append(html.join(''));
 }
-
+*/
 function searchInfo(search){
 	$('#recentPosts').empty();
 	var foundResult = false;
@@ -483,7 +484,7 @@ function searchInfo(search){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
-			
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
