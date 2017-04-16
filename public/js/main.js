@@ -318,7 +318,8 @@ function retrieveData(){
 //when post is clicked
 
 //adds one recent post to recent post section
-function addRecentPosts(title, description, imageSource){
+/*
+function addRecentPosts(title, description, imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
@@ -364,8 +365,12 @@ function addRecentPosts(title, description, imageSource){
 									.addClass("media-heading")
 									.append(
 										$('<a/>')
-										.attr("href", "#")
-										.attr("target", "_parent")
+										//.attr("href", "#"viewPost-modal)
+										//.attr("id", "postTitle")
+										//.attr("target", "_parent")
+										//.attr("onclick", "saveTitle(this.text);" return false;)
+										//.attr("data-toggle", "modal")
+										//.attr("data-target", "#viewPost-modal")
 										.html(title)
 									)
 							)
@@ -404,11 +409,12 @@ function addRecentPosts(title, description, imageSource){
 							.append(
 								$('<span/>')
 									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact:")
+									.html("Contact: " phone)
 							)
 					)
 			)
 	)
+}*/
 
 function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
