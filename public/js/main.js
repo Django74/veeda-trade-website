@@ -447,6 +447,16 @@ $(function() {
 		console.log(currentTitle + "this is the furniturepost modal show function");
 		populateFurniturePost(currentTitle); //populate post with our data
 	});
+	
+	$('#closeVehicleModal').click(function(){
+		$('#viewPost-modal').modal('toggle');
+	});
+	
+	
+	$('#closeFurnitureModal').click(function(){
+		$('#viewFurniturePost-modal').modal('toggle');
+	});
+	
 });
 
 //current title of post to be viewed
