@@ -26,30 +26,26 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a data-toggle="modal" href="#post-modal" data-target="#post-modal"><span class="glyphicon glyphicon-plus-sign"></span> Post</a></li>
+                    <li><a data-toggle="modal" href="#createVehiclePost-modal" data-target="#createVehiclePost-modal"><span class="glyphicon glyphicon-plus-sign"></span> Post</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
+                            <li><a href="#">View Vehicle Posts</a></li>
+                            <li><a data-toggle="modal" href="#createVehiclePost-modal" data-target="#createVehiclePost-modal">Create Vehicle Post</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Collectibles<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Furniture<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
+                            <li><a href="#">View Furniture Posts</a></li>
+                            <li><a data-toggle="modal" href="#createFurniturePost-modal" data-target="#createFurniturePost-modal">Create Furniture Post</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Electronics<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
-                            <li><a href="#">something</a></li>
+                            <li><a href="#">View Electronics Posts</a></li>
+                            <li><a href="#">Create Electronic Post</a></li>
                         </ul>
                     </li>
 
@@ -103,7 +99,7 @@
             </div>
 
             <div id="recentPosts" class="row">
-                
+
             </div><!-- End row -->
         </div><!-- End container -->
     </div>
@@ -184,16 +180,15 @@
     </div>
     </div>
 
-    <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="createVehiclePost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="container">
     	<div class="row">
 
     	    <div class="col-md-8 col-md-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-
-    		<h1>Create post</h1>
-      </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+    		            <h1>Create post</h1>
+                </div>
 
     		   <!-- <div class="form-group has-error">
     				<label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
@@ -364,13 +359,128 @@
     </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="createFurniturePost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="container">
+  <div class="row">
+
+      <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+
+    <h1>Create Furniture Post</h1>
+  </div>
+
+       <!-- <div class="form-group has-error">
+        <label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
+        <input type="text" class="form-control" name="slug" />
+        <span class="help-block">Field not entered!</span>
+      </div> -->
+      <div class="panel-body">
+
+        <h4><b>Seller Information</b></h4>
+
+        <hr>
+
+        <div class="form-group">
+          <label for="title">Phone Number <span class="require">*</span></label>
+          <input id="sellerPhone" type="text" class="form-control" name="title" />
+        </div>
+
+        <div class="form-group">
+          <label for="title">Address <span class="require">*</span></label>
+          <input id="sellerAddress" type="text" class="form-control" name="title" />
+        </div>
+
+        <hr>
+
+        <h4><b>Item Information</b></h4>
+        <hr>
+
+      <div class="form-group">
+        <label for="title">Title <span class="require">*</span></label>
+        <input id="title" type="text" class="form-control" name="title" />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Price <span class="require">*</span></label>
+        <input id="price" type="text" class="form-control" name="title" />
+      </div>
+
+      <br>
+
+      <!-- Multiple Radios -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="radios">Status: </label>
+        <div class="col-md-4">
+        <div class="radio">
+        <label for="radios-0">
+          <input name="radio" id="furniture-0" value="New" checked="checked" type="radio">
+          New
+        </label>
+        </div>
+        <div class="radio">
+        <label for="radios-1">
+          <input name="radio" id="furniture-1" value="Used" type="radio">
+          Used
+        </label>
+        </div>
+        <div class="radio">
+        <label for="radios-2">
+          <input name="radio" id="furniture-2" value="Damaged" type="radio">
+          Damaged
+        </label>
+        </div>
+        </div>
+      </div>
+      <br><br><br>
+      <br><br><br>
+
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" rows="5" class="form-control" name="description" ></textarea>
+      </div>
+
+      <div class="form-group">
+        <p><span class="require">*</span> - required fields</p>
+      </div>
+
+
+      <!-- Upload File -->
+      <div>
+        <label class="upload-group">
+        Upload File
+        <input type="file" class="upload-group" id="file">
+        </label>
+      </div>
+
+      <br><br>
+
+      <div class="form-group">
+        <button id="create" class="btn btn-primary" >
+          Create
+        </button>
+        <button id="cancelPost" class="btn btn-default">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
     <div class="modal fade" id="viewPost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="container">
-      <div class="row">
-
+        <div class="row">
           <div class="col-md-8 col-md-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel panel-default">
+              <div class="panel-heading">
 
                   <h2>Post Title Here</h2>
                 </div>
@@ -488,14 +598,32 @@
               <div id="description" class="container">
                   <h4>Description</h4>
                 <hr>
-              <div class="col-md-6">
+              <div class="col-xs-6">
               	<p>Description here</p>
               </div>
 
-          </div>
-
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4" id="visible-comments">
+                  <h4>Comments</h4>
+                </div>
+                <div class="col-xs-3" id="submit-comment">
+                  <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" rows="5" class="form-control" name="description" ></textarea>
+                  </div>
+                  <div class="form-group">
+            				<button id="submit-comment-btn" class="btn btn-primary" >
+            					Comment
+            				</button>
+            				<button id="close-post-btn" class="btn btn-default">
+            					Close
+            				</button>
+            			</div>
+                </div>
+            </div>
       		</div>
-
       	</div>
       </div>
       </div>
