@@ -14,13 +14,15 @@
 
   <div class="container">
     <div class="row">
-      <div class="form-group">
-        <label for="userID">User ID:</label>
-        <input type="text" class="form-control" id="userID">
-      </div>
-      <button type="submit" id="getUsr" class="btn btn-primary">GET USER INFO</button>
-      <button type="submit" id="delUsr" class="btn btn-danger">DELETE USER</button>
-      <button type="button" id="togUsr" class="btn btn-warning">TOGGLE USER ACCESS</button>
+      <form id="adminForm">
+        <div class="form-group">
+          <label for="userID">User ID:</label>
+          <input type="text" class="form-control" id="userID">
+        </div>
+        <input type="submit" id="getUsr" name="actionUsr" class="btn btn-primary" value="GET USER INFO" />
+        <input type="submit" id="delUsr" name="actionUsr" class="btn btn-primary" value="DELETE USER" />
+        <input type="submit" id="togUsr" name="actionUsr" class="btn btn-primary" value="TOGGLE USER ACCESS" />
+      </form>
     </div>
   </div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

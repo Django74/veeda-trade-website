@@ -1,5 +1,22 @@
-var http = require('http');
+var express = require('express');
+var app = express();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+var port = process.env.PORT || 3000;
 
+http.listen(port, function() {
+  console.log('Listening on port ', port);
+});
+
+app.use(express.static(__dirname));
+
+io.on('connection', function(socket){
+  socket.on('getUserAcc', function(msg){
+    io.emit('getUserAcc', msg);
+  });
+});
+
+/*
 var server = http.createServer(function(req, res) {
   // Add Firebase Admin SDK
   var admin = require("firebase-admin");
@@ -25,25 +42,10 @@ var server = http.createServer(function(req, res) {
     .catch(function(error) {
       console.log("Error fetching user data:", error);
     });
-
-  // When Get User is clicked
-  $('#getUsr').click(function() {
-    // Obtain user results and display on page.
-  })
-
-  // When Delete User is clicked
-  $('#delUsr').click(function() {
-    // Delete user
-  })
-
-  // When Toggle User is clicked
-  $('#togUsr').click(function() {
-    // Toggle user access
-  })
 });
 
 server.listen(3000);
-
+*/
 /*
   var uid = document.getElementById('some-user-id').value;
 
