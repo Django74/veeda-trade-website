@@ -172,6 +172,7 @@ $(function() {
 		var status;
 		var url;
 		var downloadURL;
+		var postCategory = "Vehicle";
 		var sellerPhone = $('#sellerPhone').val();
 		var sellerAddress = $('#sellerAddress').val();
 		var year = $('#year').val();
@@ -226,6 +227,7 @@ $(function() {
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Year:year,
 				Title:title,
@@ -245,6 +247,7 @@ $(function() {
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Year:year,
 				Title:title,
@@ -268,6 +271,7 @@ $(function() {
 	$('#createFurniturePost').click(function(e){
 		var status;
 		var url;
+		var postCategory = "Furniture";
 		var downloadURL;
 		var sellerPhone = $('#sellerFurniturePhone').val();
 		var sellerAddress = $('#sellerFurnitureAddress').val();
@@ -318,6 +322,7 @@ $(function() {
 			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Title:title,
 				Status:status,
@@ -332,6 +337,7 @@ $(function() {
 			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Title:title,
 				Status:status,
@@ -345,8 +351,8 @@ $(function() {
 		// Display success message
 		alert('Post has been successfully created!');
 		$('#createFurniturePost-modal').modal('toggle');
-	
-	
+
+
 	});
 	$('#cancelVehiclePost').click(function(e){
 		$('#createVehiclePost-modal').modal('toggle');
@@ -355,7 +361,7 @@ $(function() {
 	$('#cancelFurniturePost').click(function(e){
 		$('#createFurniturePost-modal').modal('toggle');
 	});
-	
+
 	$('#vehicleFile').on("change", function(e) {
 		selectedFile = e.target.files[0];
 		noImage = false;
@@ -370,13 +376,13 @@ $(function() {
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
-		
+
 	});
-	
+
 	$( "#viewFurniturePost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle + "this is the furniturepost modal show function");
 		populateFurniturePost(currentTitle); //populate post with our data
-		
+
 	});
 });
 
@@ -402,9 +408,9 @@ function retrieveData(){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
-
+			var postCategory = childData.Category;
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone);
+			addRecentPosts(title, description, imageSource, phone, postCategory);
 		});
 	});
 
@@ -418,20 +424,32 @@ function retrieveData(){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
+			var postCategory = childData.Category;
 
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone);
+			addRecentPosts(title, description, imageSource, phone, postCategory);
 		});
 	});
-	
+
 
 }
 
 //adds one recent post to recent post section
-function addRecentPosts(title, description, imageSource, phone){
+function addRecentPosts(title, description, imageSource, phone, postCategory){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
+
+	var postType;
+
+	if (postCategory =="Vehicle")
+	{
+		postType = "#viewPost-modal";
+	}
+	else if(postCategory =="Furniture")
+	{
+		postType = "#viewFurniturePost-modal";
+	}
 
 	$('#recentPosts').append(
 		// Post container
@@ -470,17 +488,18 @@ function addRecentPosts(title, description, imageSource, phone){
 									.attr("target", "_parent")
 							)
 							// Post Title
+
 							.append(
 								$('<h4>')
 									.addClass("media-heading")
 									.append(
 										$('<a/>')
-										.attr("href", "#viewFurniturePost-modal")
+										.attr("href", postType)
 										.attr("id", "postTitle")
 										.attr("target", "_parent")
 										.attr("onclick", "saveTitle(this.text);")
 										.attr("data-toggle", "modal")
-										.attr("data-target", "#viewFurniturePost-modal")
+										.attr("data-target", postType)
 										.html(title)
 									)
 							)
@@ -543,7 +562,7 @@ function searchInfo(search){
 			var phone = childData.Phone;
 			var make = childData.Make;
 			var model = childData.Model;
-			
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
 				//add to recent posts
@@ -558,7 +577,7 @@ function searchInfo(search){
 			}
 		});
 	});
-	
+
 	database.ref('Posts/Furniture').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -569,8 +588,8 @@ function searchInfo(search){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
-			
-			
+
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
@@ -590,7 +609,7 @@ function searchInfo(search){
 //fills data for post to be viewed
 function populatePost(currentTitle){
 	var database = firebase.database();
-	
+
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -612,7 +631,7 @@ function populatePost(currentTitle){
 				var model = childData.Model;
 				var color = childData.Color;
 				var price = childData.Price;
-			
+
 				//populate post
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
@@ -624,7 +643,7 @@ function populatePost(currentTitle){
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
 				$('#carKm td:nth-child(2)').text(km);
-				
+
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
@@ -636,15 +655,15 @@ function populatePost(currentTitle){
 		});
 	});
 
-	
-	
+
+
 }
 
 
 //fills data for  furniture post to be viewed
 function populateFurniturePost(currentTitle){
 	var database = firebase.database();
-	
+
 	database.ref('Posts/Furniture').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -661,14 +680,14 @@ function populateFurniturePost(currentTitle){
 				var address =childData.Address;
 				var status = childData.Status;
 				var price = childData.Price;
-			
+
 				//populate post
 				$('#viewFurniturePost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
 				$('#furniturePrice td:nth-child(2)').text("$" + price);
 				$('#furnitureStatus td:nth-child(2)').text(status);
-				
+
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
@@ -680,6 +699,6 @@ function populateFurniturePost(currentTitle){
 		});
 	});
 
-	
-	
+
+
 }
