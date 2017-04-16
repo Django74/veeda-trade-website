@@ -292,6 +292,7 @@ $(function() {
 		$('#createVehiclePost-modal').modal('toggle');
 	});
 
+
 	$('#createFurniturePost').click(function(e){
 		var status;
 		var url;
@@ -378,6 +379,30 @@ $(function() {
 
 
 	});
+
+	$('#submit-comment-btn').click(function(e) {
+		var database = firebase.database();
+		var comment = $('#commentArea').val();
+		console.log(comment);
+
+		database.ref('Posts/Cars').once('value').then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();
+				var title = childData.Title;
+				var d = new Date();
+				var commentID = "comment" + d.getTime();
+				if (currentTitle == title) {
+					console.log('Title Matched')
+					firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
+						[commentID]	: comment
+					});
+					return true;
+				}
+			});
+		});
+	});
+
 	$('#cancelVehiclePost').click(function(e){
 		$('#createVehiclePost-modal').modal('toggle');
 	});
@@ -446,11 +471,13 @@ $(function() {
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
+
 	});
 
 	$( "#viewFurniturePost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle + "this is the furniturepost modal show function");
 		populateFurniturePost(currentTitle); //populate post with our data
+
 	});
 
 	$('#closeVehicleModal').click(function(){
@@ -723,6 +750,8 @@ function populatePost(currentTitle){
 			}
 		});
 	});
+
+
 
 }
 
