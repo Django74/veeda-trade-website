@@ -39,7 +39,7 @@ $(function() {
       console.log("An error occurred with signing out.");
     });
   });
-  
+
  	$('#searchButton').click(function(e) {
 		var searchText = $('#searchBox').val();
 		searchInfo(searchText);
@@ -355,7 +355,7 @@ function searchInfo(search){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
 			var childData = childSnapshot.val();//get car data
-			
+
 			//retrieve car post info
 			var title = childData.Title;
 			var description = childData.Description;
@@ -374,7 +374,8 @@ function searchInfo(search){
 			}
 		});
 	});
-	
+}
+
 function populatePost(){
-	
+
 }
