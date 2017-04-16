@@ -501,6 +501,7 @@ function addRecentPosts(title, description, imageSource, phone){
 								$('<img>')
 									.attr("alt", "image")
 									.attr("src", imageSource)
+									.attr("style", "cursor:default;pointer-events: painted;")
 									.addClass("img-responsive")
 							)
 					)
@@ -638,7 +639,9 @@ function searchInfo(search){
 //fills data for post to be viewed
 function populatePost(currentTitle){
 	var database = firebase.database();
-
+	
+	
+	
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -659,24 +662,39 @@ function populatePost(currentTitle){
 				var	make = childData.Make;
 				var model = childData.Model;
 				var color = childData.Color;
-				var userId = childData.User;
 				var price = childData.Price;
+				
+				//get user Info
+				userId = childData.User;
+			
+				
 				
 				//populate post
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
-				$('#carPrice td:nth-child(2)').text(price);
+				$('#carPrice td:nth-child(2)').text("$" + price);
 				$('#carStatus td:nth-child(2)').text(status);
 				$('#carYear td:nth-child(2)').text(year);
 				$('#carMake td:nth-child(2)').text(make);
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
 				$('#carKm td:nth-child(2)').text(km);
+				
+				database.ref('Users/' + userId).once('value').then(function(snapshot){
+					//console.log('Users/' + userId);
+						var userEmail=snapshot.val().Email;
+						var userName=snapshot.val().Name;
+					
+					$('#sellerEmail td:nth-child(2)').text(userEmail);
+					$('#sellerName td:nth-child(2)').text(userName);
+				});
 				//end loop
 				return true;
 			}
 		});
-	});	
+	});
+
+	
 	
 }
