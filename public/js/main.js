@@ -3,6 +3,20 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+
+	// Check for if a user is signed in
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			$("#accountElem").removeAttr('hidden');
+			$("#logoutElem").removeAttr('hidden');
+
+			$("#welcome-txt").append(user.displayName + '.');
+			$("#welcomeElem").removeAttr('hidden');
+		} else {
+			$("#loginElem").removeAttr('hidden');
+		}
+	});
+
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -19,6 +33,7 @@ $(function() {
 		e.preventDefault();
 	});
 
+	/* Debugging purposes
   $('#getUser').click(function(e) {
     // Get user information
     var user = firebase.auth().currentUser;
@@ -31,11 +46,13 @@ $(function() {
     console.log(email);
     console.log(uid);
   })
+	*/
 
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sign out successful.");
+			location.reload();
     }).catch(function(error) {
       // An error happened.
       console.log("An error occurred with signing out.");
@@ -130,6 +147,7 @@ $(function() {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(function() {
 			alert('Login successful!');
+			location.reload();
 		})
 		.catch(function(error) {
 			// Error Handling
@@ -158,6 +176,7 @@ $(function() {
     return false;
 	});
 
+	/* For debugging
 	firebase.auth().onAuthStateChanged(function(user) {
 	if(user) {
 		console.log(user);
@@ -166,7 +185,7 @@ $(function() {
 	else {
 		console.log("No user signed in.");
 	}
-	});
+});*/
 
 	$('#createVehiclePost').click(function(e){
 		var status;
@@ -345,8 +364,8 @@ $(function() {
 		// Display success message
 		alert('Post has been successfully created!');
 		$('#createFurniturePost-modal').modal('toggle');
-	
-	
+
+
 	});
 	$('#cancelVehiclePost').click(function(e){
 		$('#createVehiclePost-modal').modal('toggle');
@@ -355,7 +374,7 @@ $(function() {
 	$('#cancelFurniturePost').click(function(e){
 		$('#createFurniturePost-modal').modal('toggle');
 	});
-	
+
 	$('#vehicleFile').on("change", function(e) {
 		selectedFile = e.target.files[0];
 		noImage = false;
@@ -370,7 +389,7 @@ $(function() {
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
-		
+
 	});
 });
 
@@ -417,7 +436,7 @@ function retrieveData(){
 			addRecentPosts(title, description, imageSource, phone);
 		});
 	});
-	
+
 
 }
 
@@ -537,7 +556,7 @@ function searchInfo(search){
 			var phone = childData.Phone;
 			var make = childData.Make;
 			var model = childData.Model;
-			
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
 				//add to recent posts
@@ -552,7 +571,7 @@ function searchInfo(search){
 			}
 		});
 	});
-	
+
 	database.ref('Posts/Furniture').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -563,8 +582,8 @@ function searchInfo(search){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
-			
-			
+
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
@@ -584,7 +603,7 @@ function searchInfo(search){
 //fills data for post to be viewed
 function populatePost(currentTitle){
 	var database = firebase.database();
-	
+
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
@@ -606,7 +625,7 @@ function populatePost(currentTitle){
 				var model = childData.Model;
 				var color = childData.Color;
 				var price = childData.Price;
-			
+
 				//populate post
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
@@ -618,7 +637,7 @@ function populatePost(currentTitle){
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
 				$('#carKm td:nth-child(2)').text(km);
-				
+
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
@@ -630,6 +649,6 @@ function populatePost(currentTitle){
 		});
 	});
 
-	
-	
+
+
 }
