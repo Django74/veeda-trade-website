@@ -663,6 +663,12 @@ function populatePost(currentTitle){
 				var model = childData.Model;
 				var color = childData.Color;
 				var price = childData.Price;
+
+				var database = firebase.database();
+				database.ref('Users/' + userId).on('value', function(snapshot) {
+					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
+					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+				});
 				
 				//get user Info
 				userId = childData.User;
