@@ -484,7 +484,36 @@ function searchInfo(search){
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
+			var make = childData.Make;
+			var model = childData.Model;
+			
+			var text = search.toLowerCase();
+			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
+				//add to recent posts
+				foundResult = true;
+				addRecentPosts(title, description, imageSource, phone);
+			}
+			if (foundResult == false){
+				$('#postsText').text("No search results");
+			}
+			else{
+				$('#postsText').text("Search results");
+			}
+		});
+	});
+	
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
 
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+			var phone = childData.Phone;
+			
+			
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
