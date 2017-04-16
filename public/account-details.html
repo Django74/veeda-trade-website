@@ -2,77 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Account</title>
+    <title>Veeda - My Account</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 </head>
 <body>
-<!--Navbar-->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">
-                <img src="images/logo.PNG" height="30">
-            </a>
-        </div>
+  <!--Navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.PNG" height="30">
+                </a>
+            </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Collectibles<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Electronics<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
-                    </ul>
-                </li>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="viewVehiclePosts">View Vehicle Posts</a></li>
+                            <li><a data-toggle="modal" href="#createVehiclePost-modal" data-target="#createVehiclePost-modal">Create Vehicle Post</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Furniture<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="viewFurniturePosts">View Furniture Posts</a></li>
+                            <li><a data-toggle="modal" href="#createFurniturePost-modal" data-target="#createFurniturePost-modal">Create Furniture Post</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Electronics<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">View Electronics Posts</a></li>
+                            <li><a href="#">Create Electronic Post</a></li>
+                        </ul>
+                    </li>
 
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="What are you looking for?">
-                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Location">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" id="showDialog">My Account</a>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="What are you looking for?" id="searchBox">
+                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <button class="btn btn-default" id="searchButton">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right" id="welcomeElem" hidden>
+                  <li>
+                      <h5 class="text-primary" id="welcome-txt">Welcome, </h5>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="accountElem" hidden>
+                    <li>
+                        <a href="account-details.html" id="showDialog">My Account</a>
+                    </li>
+                </ul>
+                <div id="dialog"></div>
+                <ul class="nav navbar-nav navbar-right" id="loginElem" hidden>
+                    <li>
+                        <a data-toggle="modal" href="#login-pageModal" data-target="#login-modal">Sign In</a>
+                    </li>
+                </ul>
+                <!-- Debugging button
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                      <button id="getUser" class="btn btn-primary" >
+                        GET USER
+                      </button>>
+                    </li>
+                </ul>
+              -->
+                <ul class="nav navbar-nav navbar-right" id="logoutElem" hidden>
+                    <li>
+                      <button id="logout-button" class="btn btn-primary" >
+                        LOGOUT
+                      </button>>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 
 <div class="container">
     <div class="row">
@@ -236,6 +254,7 @@
 <script src="js/account.js"></script>
 <script src="js/main.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
 <script>
     // Initialize Firebase
     var config = {

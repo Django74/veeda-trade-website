@@ -26,7 +26,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a data-toggle="modal" href="#createVehiclePost-modal" data-target="#createVehiclePost-modal"><span class="glyphicon glyphicon-plus-sign"></span> Post</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -55,22 +54,25 @@
                         <input type="text" class="form-control" placeholder="What are you looking for?" id="searchBox">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Location">
-                    </div>
                     <button class="btn btn-default" id="searchButton">Submit</button>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id="welcomeElem" hidden>
+                  <li>
+                      <h5 class="text-primary" id="welcome-txt">Welcome, </h5>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="accountElem" hidden>
                     <li>
                         <a href="account-details.html" id="showDialog">My Account</a>
                     </li>
                 </ul>
                 <div id="dialog"></div>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id="loginElem" hidden>
                     <li>
                         <a data-toggle="modal" href="#login-pageModal" data-target="#login-modal">Sign In</a>
                     </li>
                 </ul>
+                <!-- Debugging button
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                       <button id="getUser" class="btn btn-primary" >
@@ -78,7 +80,8 @@
                       </button>>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+              -->
+                <ul class="nav navbar-nav navbar-right" id="logoutElem" hidden>
                     <li>
                       <button id="logout-button" class="btn btn-primary" >
                         LOGOUT
@@ -525,10 +528,15 @@
 
                     </tr>
 
-                    <tr id ="sellerEmail" class="active">
+                    <tr id="sellerEmail" class="active">
                       <td>Email: </td>
                       <td>Seller Email Here</td>
 
+                    </tr>
+                    
+                    <tr id="sellerPhone" class="active">
+						<td>Phone: </td>
+						<td>Seller Phone Here</td>
                     </tr>
                   </tbody>
                 </table>
@@ -663,6 +671,11 @@
                     <tr id ="sellerEmail" class="active">
                       <td>Email: </td>
                       <td>Seller Email Here</td>
+                      
+                      <tr id="sellerPhone" class="active">
+						<td>Phone: </td>
+						<td>Seller Phone Here</td>
+                    </tr>
 
                     </tr>
                   </tbody>
