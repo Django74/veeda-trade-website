@@ -10,7 +10,6 @@ $(function() {
 		e.preventDefault();
 	});
 	$('#register-form-link').click(function(e) {
-		$("login-form").trigger("reset");
 		$("#register-form").delay(100).fadeIn(100);
  		$("#login-form").fadeOut(100);
 		$('#login-form-link').removeClass('active');
@@ -295,99 +294,6 @@ function retrieveData(){
 }
 
 //adds one recent post to recent post section
-<<<<<<< HEAD
-function addRecentPosts(title, description, imageSource){
-	//if no picture, use default
-	if(imageSource == "")
-		imageSource = "images/samplePostImg.png";
-
-	$('#recentPosts').append(
-		// Post container
-		$('<div/>')
-			.addClass("brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing")
-			// Image Display
-			.append(
-				$('<div/>')
-					.addClass("media")
-					.append(
-						$('<a/>')
-							// Image link
-							.addClass("pull-left")
-							.attr("href", "#")
-							.attr("target", "_parent")
-							// Image Source
-							.append(
-								$('<img>')
-									.attr("alt", "image")
-									.attr("src", imageSource)
-									.addClass("img-responsive")
-							)
-					)
-					.append(
-						$('<div/>')
-							.addClass("clearfix visible-sm")
-					)
-					// Text Display
-					.append(
-						$('<div/>')
-							.addClass("media-body fnt-smaller")
-							.append(
-								$('<a/>')
-									.attr("href", "#")
-									.attr("target", "_parent")
-							)
-							// Post Title
-							.append(
-								$('<h4>')
-									.addClass("media-heading")
-									.append(
-										$('<a/>')
-										.attr("href", "#")
-										.attr("target", "_parent")
-										.html(title)
-									)
-							)
-							// Location
-							.append(
-								$('<ul>')
-									.addClass("list-inline mrg-0 btm-mrg-10 clr-535353")
-									.append(
-										$('<li/>')
-										.html("Calgary")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Alberta")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Canada")
-									)
-							)
-							//Description
-							.append(
-								$('<p/>')
-									.addClass("hidden-xs")
-									.html(description)
-							)
-							// Contact Info
-							.append(
-								$('<span/>')
-									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact:")
-							)
-					)
-			)
-	)
-=======
 function addRecentPosts(title, description,imageSource, phone){
 	//if no picture, use default
 	if(imageSource == "")
@@ -472,5 +378,4 @@ function searchInfo(search){
 
 function populatePost(){
 
->>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }

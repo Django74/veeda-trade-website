@@ -41,12 +41,6 @@ $(function() {
     });
   });
 
- 	$('#searchButton').click(function(e) {
-		var searchText = $('#searchBox').val();
-		searchInfo(searchText);
-		e.preventDefault();
-	});
-
 	$('#register-form').on('submit', function () {
     var username = document.getElementById('register-username').value;
 		var email = document.getElementById('register-email').value;
@@ -171,8 +165,6 @@ $(function() {
 		var status;
 		var url;
 		var downloadURL;
-		var sellerPhone = $('#sellerPhone').val();
-		var sellerAddress = $('#sellerAddress').val();
 		var year = $('#year').val();
 		var title = $('#title').val();
 		var price = $('#price').val();
@@ -224,8 +216,6 @@ $(function() {
 			  downloadURL = uploadTask.snapshot.downloadURL;
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
-				Phone: sellerPhone,
-				Address: sellerAddress,
 				Year:year,
 				Title:title,
 				Kilometers:km,
@@ -242,8 +232,6 @@ $(function() {
 			downloadURL = "";
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
-				Phone: sellerPhone,
-				Address: sellerAddress,
 				Year:year,
 				Title:title,
 				Kilometers:km,
@@ -286,16 +274,14 @@ function retrieveData(){
 			var title = childData.Title;
 			var description = childData.Description;
 			var imageSource = childData.Source;
-			var phone = childData.Phone;
 
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone);
+			addRecentPosts(title, description, imageSource);
 		});
 	});
 }
 
 //adds one recent post to recent post section
-<<<<<<< HEAD
 function addRecentPosts(title, description, imageSource){
 	//if no picture, use default
 	if(imageSource == "")
@@ -387,90 +373,4 @@ function addRecentPosts(title, description, imageSource){
 					)
 			)
 	)
-=======
-function addRecentPosts(title, description,imageSource, phone){
-	//if no picture, use default
-	if(imageSource == "")
-		imageSource = "images/samplePostImg.png";
-
-	var html =
-	['<div class="col-sm-6">',
-		'<div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing">',
-			'<div class="media">',
-				'<a class="pull-left" href="#" target="_parent">',
-					'<img width="365" height="365" alt="image" class="img-responsive" src=',
-					imageSource,
-					'></a>',
-
-				'<div class="clearfix visible-sm"></div>',
-
-				'<div class="media-body fnt-smaller">',
-					'<a href="#" target="_parent"></a>',
-
-					'<h4 class="media-heading">',
-						'<a data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
-						//title variable
-						title,
-
-						//possible date variable
-						//<small class="pull-right">Posted: Apr 12th 2017</small>
-						'</a></h4>',
-
-
-					'<ul class="list-inline mrg-0 btm-mrg-10 clr-535353">',
-						'<li>Calgary</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Alberta</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Canada</li>',
-					'</ul>',
-
-					'<p class="hidden-xs">',
-					description,
-					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: ',
-					phone,
-				'</div>',
-			'</div>',
-		'</div>',
-	'</div><!--End Column-->',]
-
-	$('#recentPosts').append(html.join(''));
-}
-
-function searchInfo(search){
-	$('#recentPosts').empty();
-	var foundResult = false;
-	var database = firebase.database();
-	database.ref('Posts/Cars').once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var key = "" + childSnapshot.key;
-			var childData = childSnapshot.val();//get car data
-
-			//retrieve car post info
-			var title = childData.Title;
-			var description = childData.Description;
-			var imageSource = childData.Source;
-			var text = search.toLowerCase();
-			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
-				//add to recent posts
-				foundResult = true;
-				addRecentPosts(title, description, imageSource);
-			}
-			if (foundResult == false){
-				$('#postsText').text("No search results");
-			}
-			else{
-				$('#postsText').text("Search results");
-			}
-		});
-	});
-}
-
-function populatePost(){
-
->>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
 }

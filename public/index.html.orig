@@ -56,13 +56,13 @@
                 </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="What are you looking for?">
+                        <input type="text" class="form-control" placeholder="What are you looking for?" id="searchBox">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Location">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button class="btn btn-default" id="searchButton">Submit</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -98,12 +98,18 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Recent Postings</h1>
+                    <h1 id="postsText">Recent Postings</h1>
                 </div>
             </div>
-
             <div id="recentPosts" class="row">
-                
+<<<<<<< HEAD
+              '<div class="col-sm-6" id="main-left-column">
+              </div>
+              '<div class="col-sm-6" id="main-right-column">
+              </div>
+=======
+
+>>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
             </div><!-- End row -->
         </div><!-- End container -->
     </div>
