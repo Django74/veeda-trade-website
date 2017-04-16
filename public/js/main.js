@@ -3,6 +3,20 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+
+	// Check for if a user is signed in
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			$("#accountElem").removeAttr('hidden');
+			$("#logoutElem").removeAttr('hidden');
+
+			$("#welcome-txt").append(user.displayName + '.');
+			$("#welcomeElem").removeAttr('hidden');
+		} else {
+			$("#loginElem").removeAttr('hidden');
+		}
+	});
+
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -19,6 +33,7 @@ $(function() {
 		e.preventDefault();
 	});
 
+	/* Debugging purposes
   $('#getUser').click(function(e) {
     // Get user information
     var user = firebase.auth().currentUser;
@@ -31,11 +46,13 @@ $(function() {
     console.log(email);
     console.log(uid);
   })
+	*/
 
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sign out successful.");
+			location.reload();
     }).catch(function(error) {
       // An error happened.
       console.log("An error occurred with signing out.");
@@ -130,6 +147,7 @@ $(function() {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(function() {
 			alert('Login successful!');
+			location.reload();
 		})
 		.catch(function(error) {
 			// Error Handling
@@ -158,6 +176,7 @@ $(function() {
     return false;
 	});
 
+	/* For debugging
 	firebase.auth().onAuthStateChanged(function(user) {
 	if(user) {
 		console.log(user);
@@ -166,7 +185,7 @@ $(function() {
 	else {
 		console.log("No user signed in.");
 	}
-	});
+});*/
 
 	$('#createVehiclePost').click(function(e){
 		var status;
@@ -439,9 +458,11 @@ $(function() {
 		});
 
 	});
-
-
-
+	
+	$('#showDialog').click(function(e) {
+		viewUserPosts();
+	});
+	
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
@@ -453,6 +474,16 @@ $(function() {
 		populateFurniturePost(currentTitle); //populate post with our data
 
 	});
+	
+	$('#closeVehicleModal').click(function(){
+		$('#viewPost-modal').modal('toggle');
+	});
+	
+	
+	$('#closeFurnitureModal').click(function(){
+		$('#viewFurniturePost-modal').modal('toggle');
+	});
+	
 });
 
 //current title of post to be viewed
@@ -580,7 +611,7 @@ function addRecentPosts(title, description, imageSource, phone, postCategory, pr
 									.addClass("list-inline mrg-0 btm-mrg-10 clr-535353")
 									.append(
 										$('<li/>')
-										.html('<font color="green">' + "$" + price + '</font>')
+										.html('<font color="green">' + "$" + numberWithCommas(price) + '</font>')
 									)
 							)
 							//Description
@@ -593,7 +624,7 @@ function addRecentPosts(title, description, imageSource, phone, postCategory, pr
 							.append(
 								$('<span/>')
 									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact: " + phone)
+									.html("Contact: " + phoneNumberWithDashes(phone))
 							)
 					)
 			)
@@ -619,9 +650,10 @@ function searchInfo(search){
 			var model = childData.Model;
 			var postCategory = childData.Category;
 			var price = childData.Price;
+			var status = childData.Status;
 
 			var text = search.toLowerCase();
-			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text)){
+			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text) || status.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
 				addRecentPosts(title, description, imageSource, phone, postCategory, price);
@@ -694,18 +726,19 @@ function populatePost(currentTitle){
 				$('#viewPost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
-				$('#carPrice td:nth-child(2)').text("$" + price);
+				$('#carPrice td:nth-child(2)').text("$" + numberWithCommas(price));
 				$('#carStatus td:nth-child(2)').text(status);
 				$('#carYear td:nth-child(2)').text(year);
 				$('#carMake td:nth-child(2)').text(make);
 				$('#carModel td:nth-child(2)').text(model);
 				$('#carColor td:nth-child(2)').text(color);
-				$('#carKm td:nth-child(2)').text(km);
+				$('#carKm td:nth-child(2)').text(numberWithCommas(km));
 
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
 				//end loop
 				return true;
@@ -716,6 +749,7 @@ function populatePost(currentTitle){
 
 
 }
+
 
 //fills data for  furniture post to be viewed
 function populateFurniturePost(currentTitle){
@@ -742,20 +776,46 @@ function populateFurniturePost(currentTitle){
 				$('#viewFurniturePost-modal h2').text(title);
 				$('#description p').text(description);
 				$('#image img').attr('src', imageSource);
-				$('#furniturePrice td:nth-child(2)').text("$" + price);
+				$('#furniturePrice td:nth-child(2)').text("$" + numberWithCommas(price));
 				$('#furnitureStatus td:nth-child(2)').text(status);
 
 				//populate username and email
 				database.ref('Users/' + childData.User).on('value', function(snapshot) {
 					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
 				//end loop
 				return true;
 			}
 		});
 	});
+}
 
+function viewUserPosts(){
+	var user = firebase.auth().currentUser;
+	var userId = user.uid;
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			if (childData.User == userId){
+				// populate myaccount with user posts
+				console.log("vincents gay");
+			}
+		});
+	});
+	
+	
 
+}
 
+//function to replace number with commas
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function phoneNumberWithDashes(phone){
+	return phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 }

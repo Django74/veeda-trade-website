@@ -3,6 +3,20 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+
+	// Check for if a user is signed in
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			$("#accountElem").removeAttr('hidden');
+			$("#logoutElem").removeAttr('hidden');
+
+			$("#welcome-txt").append(user.displayName + '.');
+			$("#welcomeElem").removeAttr('hidden');
+		} else {
+			$("#loginElem").removeAttr('hidden');
+		}
+	});
+
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -19,6 +33,7 @@ $(function() {
 		e.preventDefault();
 	});
 
+	/* Debugging purposes
   $('#getUser').click(function(e) {
     // Get user information
     var user = firebase.auth().currentUser;
@@ -31,11 +46,13 @@ $(function() {
     console.log(email);
     console.log(uid);
   })
+	*/
 
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sign out successful.");
+			location.reload();
     }).catch(function(error) {
       // An error happened.
       console.log("An error occurred with signing out.");
@@ -130,6 +147,7 @@ $(function() {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(function() {
 			alert('Login successful!');
+			location.reload();
 		})
 		.catch(function(error) {
 			// Error Handling
@@ -158,6 +176,7 @@ $(function() {
     return false;
 	});
 
+	/* For debugging
 	firebase.auth().onAuthStateChanged(function(user) {
 	if(user) {
 		console.log(user);
@@ -166,12 +185,13 @@ $(function() {
 	else {
 		console.log("No user signed in.");
 	}
-	});
+});*/
 
-	$('#create').click(function(e){
+	$('#createVehiclePost').click(function(e){
 		var status;
 		var url;
 		var downloadURL;
+		var postCategory = "Vehicle";
 		var sellerPhone = $('#sellerPhone').val();
 		var sellerAddress = $('#sellerAddress').val();
 		var year = $('#year').val();
@@ -226,6 +246,7 @@ $(function() {
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Year:year,
 				Title:title,
@@ -236,6 +257,7 @@ $(function() {
 				Color:color,
 				Description:description,
 				User: user.uid,
+				Price: price,
 			});
 			});
 		}
@@ -244,6 +266,7 @@ $(function() {
 			firebase.database().ref('Posts/Cars/'+ newPostKey).set({
 				Source: downloadURL,
 				Phone: sellerPhone,
+				Category: postCategory,
 				Address: sellerAddress,
 				Year:year,
 				Title:title,
@@ -254,79 +277,285 @@ $(function() {
 				Color:color,
 				Description:description,
 				User: user.uid,
+				Price: price,
 			});
 		}
 		e.preventDefault();
 
 		// Display success message
 		alert('Post has been successfully created!');
-		$('#post-modal').modal('toggle');
+		$('#createVehiclePost-modal').modal('toggle');
 	});
 
-	$('#cancelPost').click(function(e){
-		$('#post-modal').modal('toggle');
+
+	$('#createFurniturePost').click(function(e){
+		var status;
+		var url;
+		var postCategory = "Furniture";
+		var downloadURL;
+		var sellerPhone = $('#sellerFurniturePhone').val();
+		var sellerAddress = $('#sellerFurnitureAddress').val();
+		var title = $('#furnitureTitle').val();
+		var price = $('#furniturePrice').val();
+		var used = document.getElementById('furniture-1').checked;
+		var newFurniture = document.getElementById('furniture-0').checked;
+		var damage = document.getElementById('furniture-1').checked;
+		var description = $('#furnitureDescription').val();
+		var newPostKey = firebase.database().ref().child('post').push().key;
+		var user = firebase.auth().currentUser;
+		if (used == true){
+			status = $('#furniture-1').val();
+		} else if( newFurniture == true){
+			status = $('#furniture-0').val();
+		} else {
+			status = $('#furniture-2').val();
+		}
+
+		if(noImage == false){
+			var filename = selectedFile.name;
+			var storageRef = firebase.storage().ref('Posts/Furniture/' + newPostKey +'/' + filename);
+			var uploadTask = storageRef.put(selectedFile);
+
+			// Register three observers:
+			// 1. 'state_changed' observer, called any time the state changes
+			// 2. Error observer, called on failure
+			// 3. Completion observer, called on successful completion
+			uploadTask.on('state_changed', function(snapshot){
+			  // Observe state change events such as progress, pause, and resume
+			  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+			  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			  console.log('Upload is ' + progress + '% done');
+			  switch (snapshot.state) {
+				case firebase.storage.TaskState.PAUSED: // or 'paused'
+				  console.log('Upload is paused');
+				  break;
+				case firebase.storage.TaskState.RUNNING: // or 'running'
+				  console.log('Upload is running');
+				  break;
+			  }
+			}, function(error) {
+			  // Handle unsuccessful uploads
+			}, function() {
+			  // Handle successful uploads on complete
+			  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+			  downloadURL = uploadTask.snapshot.downloadURL;
+			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
+				Source: downloadURL,
+				Phone: sellerPhone,
+				Category: postCategory,
+				Address: sellerAddress,
+				Title:title,
+				Status:status,
+				Description:description,
+				User: user.uid,
+				Price: price,
+			});
+			});
+		}
+		else{
+			downloadURL = "";
+			firebase.database().ref('Posts/Furniture/'+ newPostKey).set({
+				Source: downloadURL,
+				Phone: sellerPhone,
+				Category: postCategory,
+				Address: sellerAddress,
+				Title:title,
+				Status:status,
+				Description:description,
+				User: user.uid,
+				Price: price,
+			});
+		}
+		e.preventDefault();
+
+		// Display success message
+		alert('Post has been successfully created!');
+		$('#createFurniturePost-modal').modal('toggle');
+
+
 	});
 
-	$('#file').on("change", function(e) {
+	$('#submit-comment-btn').click(function(e) {
+		var database = firebase.database();
+		var comment = $('#commentArea').val();
+		console.log(comment);
+
+		database.ref('Posts/Cars').once('value').then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();
+				var title = childData.Title;
+				var d = new Date();
+				var commentID = "comment" + d.getTime();
+				if (currentTitle == title) {
+					console.log('Title Matched')
+					firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
+						[commentID]	: comment
+					});
+					return true;
+				}
+			});
+		});
+	});
+
+	$('#cancelVehiclePost').click(function(e){
+		$('#createVehiclePost-modal').modal('toggle');
+	});
+
+	$('#cancelFurniturePost').click(function(e){
+		$('#createFurniturePost-modal').modal('toggle');
+	});
+
+	$('#vehicleFile').on("change", function(e) {
 		selectedFile = e.target.files[0];
 		noImage = false;
 	});
 
-
-
-	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
-		console.log("I want this to appear after the modal has opened!");
-		console.log(currentTitle);
-		//console.log("hi");
-	//	console.log($(e.target).text());
+	$('#furnitureFile').on("change", function(e) {
+		selectedFile = e.target.files[0];
+		noImage = false;
 	});
+
+	$('#viewFurniturePosts').click(function(e) {
+		$('#recentPosts').empty();
+		var database = firebase.database();
+		database.ref('Posts/Furniture').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				$('#postsText').text("Furniture posts");
+				//retrieve car post info
+				var title = childData.Title;
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var postCategory = childData.Category;
+				var price = childData.Price;
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
+
+			});
+		});
+
+	});
+
+	$('#viewVehiclePosts').click(function(e) {
+		$('#recentPosts').empty();
+		var database = firebase.database();
+		database.ref('Posts/Cars').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				$('#postsText').text("Vehicle posts");
+				//retrieve car post info
+				var title = childData.Title;
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var postCategory = childData.Category;
+				var price = childData.Price;
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
+			});
+		});
+
+	});
+<<<<<<< HEAD
+
+
+
+=======
+	
+	$('#showDialog').click(function(e) {
+		viewUserPosts();
+	});
+	
+>>>>>>> 59f7d5fd3298e608645a89bb4e86834fe3d31685
+	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
+		console.log(currentTitle);
+		populatePost(currentTitle); //populate post with our data
+	});
+
+	$( "#viewFurniturePost-modal" ).on('show.bs.modal', function(e){
+		console.log(currentTitle + "this is the furniturepost modal show function");
+		populateFurniturePost(currentTitle); //populate post with our data
+	});
+	
+	$('#closeVehicleModal').click(function(){
+		$('#viewPost-modal').modal('toggle');
+	});
+	
+	
+	$('#closeFurnitureModal').click(function(){
+		$('#viewFurniturePost-modal').modal('toggle');
+	});
+	
 });
 
-
+//current title of post to be viewed
 var currentTitle;
 
+//saves title of post to be viewed
 function saveTitle(title){
 	currentTitle = title;
 }
+
+//reads data from database and adds to recent posts
 function retrieveData(){
 	var database = firebase.database();
 
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			var key = "" + childSnapshot.key;
-			var childData = childSnapshot.val();//get car data
+			childData = childSnapshot.val();//get car data
 
 			//retrieve car post info
 			var title = childData.Title;
 			var description = childData.Description;
 			var imageSource = childData.Source;
 			var phone = childData.Phone;
+			var postCategory = childData.Category;
+			var price = childData.Price;
+			//add to recent posts
+			addRecentPosts(title, description, imageSource, phone, postCategory, price);
+		});
+	});
+
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			childData = childSnapshot.val();//get car data
+
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+			var phone = childData.Phone;
+			var postCategory = childData.Category;
+			var price = childData.Price;
 
 			//add to recent posts
-			addRecentPosts(title, description, imageSource, phone);
+			addRecentPosts(title, description, imageSource, phone, postCategory, price);
 		});
 	});
 
 
-
 }
-/*$('#postTitle').click(function(e){
-	console.log($(e.target).text());
-	console.log("hi");
-});
-*/
-//when post is clicked
-
-
-
-
 
 //adds one recent post to recent post section
-<<<<<<< HEAD
-function addRecentPosts(title, description, imageSource){
+function addRecentPosts(title, description, imageSource, phone, postCategory, price){
 	//if no picture, use default
 	if(imageSource == "")
 		imageSource = "images/samplePostImg.png";
+
+	var postType;
+
+	if (postCategory =="Vehicle")
+	{
+		postType = "#viewPost-modal";
+	}
+	else if(postCategory =="Furniture")
+	{
+		postType = "#viewFurniturePost-modal";
+	}
 
 	$('#recentPosts').append(
 		// Post container
@@ -347,6 +576,7 @@ function addRecentPosts(title, description, imageSource){
 								$('<img>')
 									.attr("alt", "image")
 									.attr("src", imageSource)
+									.attr("style", "cursor:default;pointer-events: painted;")
 									.addClass("img-responsive")
 							)
 					)
@@ -364,13 +594,18 @@ function addRecentPosts(title, description, imageSource){
 									.attr("target", "_parent")
 							)
 							// Post Title
+
 							.append(
 								$('<h4>')
 									.addClass("media-heading")
 									.append(
 										$('<a/>')
-										.attr("href", "#")
+										.attr("href", postType)
+										.attr("id", "postTitle")
 										.attr("target", "_parent")
+										.attr("onclick", "saveTitle(this.text);")
+										.attr("data-toggle", "modal")
+										.attr("data-target", postType)
 										.html(title)
 									)
 							)
@@ -380,23 +615,7 @@ function addRecentPosts(title, description, imageSource){
 									.addClass("list-inline mrg-0 btm-mrg-10 clr-535353")
 									.append(
 										$('<li/>')
-										.html("Calgary")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Alberta")
-									)
-									.append(
-										$('<li/>')
-										.attr("style", "list-style: none")
-									)
-									.append(
-										$('<li/>')
-										.html("Canada")
+										.html('<font color="green">' + "$" + numberWithCommas(price) + '</font>')
 									)
 							)
 							//Description
@@ -409,67 +628,14 @@ function addRecentPosts(title, description, imageSource){
 							.append(
 								$('<span/>')
 									.addClass("fnt-smaller fnt-lighter fnt-arial")
-									.html("Contact:")
+									.html("Contact: " + phoneNumberWithDashes(phone))
 							)
 					)
 			)
 	)
-=======
-function addRecentPosts(title, description,imageSource, phone){
-	//if no picture, use default
-	if(imageSource == "")
-		imageSource = "images/samplePostImg.png";
-
-	var html =
-	['<div class="col-sm-6">',
-		'<div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 item-listing">',
-			'<div class="media">',
-				'<a class="pull-left" href="#" target="_parent">',
-					'<img width="365" height="365" alt="image" class="img-responsive" src=',
-					imageSource,
-					'></a>',
-
-				'<div class="clearfix visible-sm"></div>',
-
-				'<div class="media-body fnt-smaller">',
-					'<a href="#" target="_parent"></a>',
-
-					'<h4 class="media-heading">',
-						'<a id="postTitle" onclick="saveTitle(this.text);" return false;" data-toggle="modal" href="#viewPost-modal" data-target="#viewPost-modal">',
-						//title variable
-						title,
-
-						//possible date variable
-						//<small class="pull-right">Posted: Apr 12th 2017</small>
-						'</a></h4>',
-
-
-					'<ul class="list-inline mrg-0 btm-mrg-10 clr-535353">',
-						'<li>Calgary</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Alberta</li>',
-
-						'<li style="list-style: none">|</li>',
-
-						'<li>Canada</li>',
-					'</ul>',
-
-					'<p class="hidden-xs">',
-					description,
-					'</p><span class="fnt-smaller fnt-lighter fnt-arial">Contact @: ',
-					phone,
-				'</div>',
-			'</div>',
-		'</div>',
-	'</div><!--End Column-->',]
-
-	$('#recentPosts').append(html.join(''));
 }
-<<<<<<< HEAD
-=======
 
+//search function for site
 function searchInfo(search){
 	$('#recentPosts').empty();
 	var foundResult = false;
@@ -483,11 +649,46 @@ function searchInfo(search){
 			var title = childData.Title;
 			var description = childData.Description;
 			var imageSource = childData.Source;
+			var phone = childData.Phone;
+			var make = childData.Make;
+			var model = childData.Model;
+			var postCategory = childData.Category;
+			var price = childData.Price;
+			var status = childData.Status;
+
+			var text = search.toLowerCase();
+			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text) || make.toLowerCase().includes(text) || model.toLowerCase().includes(text) || status.toLowerCase().includes(text)){
+				//add to recent posts
+				foundResult = true;
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
+			}
+			if (foundResult == false){
+				$('#postsText').text("No search results");
+			}
+			else{
+				$('#postsText').text("Search results");
+			}
+		});
+	});
+
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+
+			//retrieve car post info
+			var title = childData.Title;
+			var description = childData.Description;
+			var imageSource = childData.Source;
+			var phone = childData.Phone;
+			var postCategory = childData.Category;
+			var price = childData.Price;
+
 			var text = search.toLowerCase();
 			if(title.toLowerCase().includes(text) || description.toLowerCase().includes(text)){
 				//add to recent posts
 				foundResult = true;
-				addRecentPosts(title, description, imageSource);
+				addRecentPosts(title, description, imageSource, phone, postCategory, price);
 			}
 			if (foundResult == false){
 				$('#postsText').text("No search results");
@@ -499,8 +700,123 @@ function searchInfo(search){
 	});
 }
 
-function populatePost(){
+//fills data for post to be viewed
+function populatePost(currentTitle){
+	var database = firebase.database();
 
->>>>>>> 4ccb912d6bf5105811861d80eee38c4483dfd3e6
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			var title = childData.Title;
+
+			//if post we want matches post to be viewed
+			if(currentTitle == title)
+			{
+				//retrieve car post info
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var address =childData.Address;
+				var	year = childData.Year;
+				var km = childData.Kilometers;
+				var status = childData.Status;
+				var	make = childData.Make;
+				var model = childData.Model;
+				var color = childData.Color;
+				var price = childData.Price;
+
+				//populate post
+				$('#viewPost-modal h2').text(title);
+				$('#description p').text(description);
+				$('#image img').attr('src', imageSource);
+				$('#carPrice td:nth-child(2)').text("$" + numberWithCommas(price));
+				$('#carStatus td:nth-child(2)').text(status);
+				$('#carYear td:nth-child(2)').text(year);
+				$('#carMake td:nth-child(2)').text(make);
+				$('#carModel td:nth-child(2)').text(model);
+				$('#carColor td:nth-child(2)').text(color);
+				$('#carKm td:nth-child(2)').text(numberWithCommas(km));
+
+				//populate username and email
+				database.ref('Users/' + childData.User).on('value', function(snapshot) {
+					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
+					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
+				});
+				//end loop
+				return true;
+			}
+		});
+	});
+
 }
->>>>>>> 5dc7d2123240e2b7c8eedc97d78557dbda20afb2
+
+//fills data for  furniture post to be viewed
+function populateFurniturePost(currentTitle){
+	var database = firebase.database();
+
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			var title = childData.Title;
+
+			//if post we want matches post to be viewed
+			if(currentTitle == title)
+			{
+				//retrieve car post info
+				var description = childData.Description;
+				var imageSource = childData.Source;
+				var phone = childData.Phone;
+				var address =childData.Address;
+				var status = childData.Status;
+				var price = childData.Price;
+
+				//populate post
+				$('#viewFurniturePost-modal h2').text(title);
+				$('#description p').text(description);
+				$('#image img').attr('src', imageSource);
+				$('#furniturePrice td:nth-child(2)').text("$" + numberWithCommas(price));
+				$('#furnitureStatus td:nth-child(2)').text(status);
+
+				//populate username and email
+				database.ref('Users/' + childData.User).on('value', function(snapshot) {
+					$('#sellerName td:nth-child(2)').text(snapshot.val().Name);
+					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
+					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
+				});
+				//end loop
+				return true;
+			}
+		});
+	});
+}
+
+function viewUserPosts(){
+	var user = firebase.auth().currentUser;
+	var userId = user.uid;
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();//get car data
+			if (childData.User == userId){
+				// populate myaccount with user posts
+				console.log("vincents gay");
+			}
+		});
+	});
+	
+	
+
+}
+
+//function to replace number with commas
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function phoneNumberWithDashes(phone){
+	return phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+}
