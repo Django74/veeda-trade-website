@@ -83,7 +83,7 @@ $(function() {
 	      });
 
 				alert('Registration complete!');
-				location.reload();
+                location.reload();
 	    }, function(error) {
 	  			// Error Handling
 	  			var errorCode = error.code;
@@ -111,7 +111,7 @@ $(function() {
 		else {
 			alert('Passwords do not match.');
 		}
-
+        
     return false;
 	});
 
