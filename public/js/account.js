@@ -10,7 +10,7 @@ $(document).ready(function () {
         $("#username-display").html(name);
       }
       else {
-        console.log("error");
+        console.log(error);
       }
     });
 });
