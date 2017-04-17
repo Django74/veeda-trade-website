@@ -746,10 +746,10 @@ function populatePost(currentTitle){
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
 					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
-
+				$("#carCommentsBody").empty();
 				database.ref('Posts/Cars/' + key + '/Comments').once('value').then(function(snapshot) {
 					snapshot.forEach(function(childSnapshot) {
-						var cmnt = childData.val().Comment;
+						var cmnt = childSnapshot.val().Comment;
 						$("#carCommentsBody").append('<tr><td>'+ cmnt + '</td></tr>')
 					});
 				});
@@ -819,6 +819,13 @@ function populateFurniturePost(currentTitle){
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
 					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
+				$("#furnitureCommentsBody").empty();
+				database.ref('Posts/Furniture/' + key + '/Comments').once('value').then(function(snapshot) {
+					snapshot.forEach(function(childSnapshot) {
+						var cmnt = childSnapshot.val().Comment;
+						$("#furnitureCommentsBody").append('<tr><td>'+ cmnt + '</td></tr>')
+					});
+				})
 				//end loop
 				return true;
 			}
