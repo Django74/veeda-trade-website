@@ -390,7 +390,7 @@ $(function() {
 				if (currentTitle == title) {
 					console.log('Title Matched')
 					firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
-						[commentID]	: comment
+						Comment	: comment
 					});
 					return true;
 				}
@@ -458,11 +458,11 @@ $(function() {
 		});
 
 	});
-	
+
 	$('#showDialog').click(function(e) {
 		viewUserPosts();
 	});
-	
+
 	$( "#viewPost-modal" ).on('show.bs.modal', function(e){
 		console.log(currentTitle);
 		populatePost(currentTitle); //populate post with our data
@@ -474,16 +474,16 @@ $(function() {
 		populateFurniturePost(currentTitle); //populate post with our data
 
 	});
-	
+
 	$('#closeVehicleModal').click(function(){
 		$('#viewPost-modal').modal('toggle');
 	});
-	
-	
+
+
 	$('#closeFurnitureModal').click(function(){
 		$('#viewFurniturePost-modal').modal('toggle');
 	});
-	
+
 });
 
 //current title of post to be viewed
@@ -740,6 +740,19 @@ function populatePost(currentTitle){
 					$('#sellerEmail td:nth-child(2)').text(snapshot.val().Email);
 					$('#sellerPhone td:nth-child(2)').text(phoneNumberWithDashes(phone));
 				});
+
+				database.ref('Posts/Cars/' + key + '/Comments').once('value').then(function(snapshot) {
+					snapshot.forEach(function(childSnapshot) {
+						var cmnt = childData.Comment;
+						$("#commentsBody").append(
+							$('<tr/>')
+								.append(
+									$('<td/>')
+										.html(cmnt)
+								)
+						)
+					});
+				});
 				//end loop
 				return true;
 			}
@@ -806,8 +819,8 @@ function viewUserPosts(){
 			}
 		});
 	});
-	
-	
+
+
 
 }
 
