@@ -77,9 +77,8 @@ function editPost(currentKey){
 
             if (currentKey == key)
             {
-                $('#editFurniturePost-modal').modal('toggle');
                 currentPostToEdit = currentKey;
-                
+                $('#editFurniturePost-modal').modal('toggle');
                 //end loop
                 return true;
             }
@@ -88,7 +87,7 @@ function editPost(currentKey){
 		});
 	});
 }
-var noImage = true;
+
 $( "#editVehiclePost-modal" ).on('show.bs.modal', function(e){
     console.log("TEST");
     
@@ -216,7 +215,44 @@ $( "#editVehiclePost-modal" ).on('show.bs.modal', function(e){
         
 });
 
+$("#editFurniturePost-modal").on('show.bs.modal', function(e){
+    var database = firebase.database();
 
+    database.ref('Posts/Furniture/' + currentPostToEdit).once('value').then(function(snapshot){
+        var key = "" + snapshot.key;
+        var childData = snapshot.val();//get car data
+    
+        //retrieve furniture post info
+        var title = childData.Title;
+        var description = childData.Description;
+        var imageSource = childData.Source;
+        var phone = childData.Phone;
+        var postCategory = childData.Category;
+        var price = childData.Price;
+        var address = childData.Address;
+       
+        $("#editFurniturePost-modal-modal h1").html("Edit " + '<span style="font-size:25px">' + '"' + title + '"' + "</span>")
+        $("#editFurniturePost-modal #sellerFurniturePhone").val(phone);
+        $("#editFurniturePost-modal #furnitureTitle").val(title);
+        $("#editFurniturePost-modal #furniturePrice").val(price);
+        $("#editFurniturePost-modal #furnitureDescription").val(description);
+        $("#editFurniturePost-modal #sellerFurnitureAddress").val(address);
+		
+        if(status == "New")
+        {
+            $("#editFurniturePost-modal #furniture-0").attr('checked',true);
+        }
+        
+        else if(status == "Used")
+        {
+            $("#editFurniturePost-modal #furniture-1").attr('checked',true);
+        }   
+        else if(status == "Damaged")
+        {
+            $("#editFurniturePost-modal #furniture-2").attr('checked',true);
+        }
+		});
+});
 
 $('#editVehiclePost').click(function(e){
     console.log("hello");
@@ -317,6 +353,13 @@ $('#editFurniturePost').click(function(e){
 
 });
 
+$("#cancelEditVehiclePost").click(function(e){
+    $('#editVehiclePost-modal').modal('toggle');
+});
+
+$("#cancelEditFurniturePost").click(function(e){
+    $('#editFurniturePost-modal').modal('toggle');
+});
 function deletePost(key){
 	var database = firebase.database();
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
