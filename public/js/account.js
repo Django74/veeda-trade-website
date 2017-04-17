@@ -8,9 +8,9 @@ $(document).ready(function () {
         name = user.displayName;
 
         $("#username-display").html(name);
-		
+
 		//Showing user posts
-		
+
 		var userId = user.uid;
 		var database = firebase.database();
 		database.ref('Posts/Cars').once('value').then(function(snapshot){
@@ -36,14 +36,14 @@ $(document).ready(function () {
 					$('#items').append(newRowData);
 				}
 			});
-		});		
+		});
 
       }
       else {
         console.log(error);
       }
     });
-	
+
 });
 
 function editPost(key){
@@ -123,7 +123,7 @@ $(function() {
               alert("User updated");
         			location.reload();
             }, function(error) {
-              alert("User could not be updated");
+              alert("Email could not be updated");
             });
           }
           if (newPass != "" && newPass == verPass) {
@@ -131,7 +131,7 @@ $(function() {
               alert("User updated");
         			location.reload();
             }, function(error) {
-              alert("User could not be updated");
+              alert("Password could not be updated");
             });
           }
           $("#registrationForm")[0].reset()
