@@ -802,11 +802,9 @@ function viewUserPosts(){
 	var database = firebase.database();
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
-			var key = "" + childSnapshot.key;
 			var childData = childSnapshot.val();//get car data
 			if (childData.User == userId){
 				// populate myaccount with user posts
-				console.log("vincents gay");
 			}
 		});
 	});
