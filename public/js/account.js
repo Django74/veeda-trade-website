@@ -8,11 +8,29 @@ $(document).ready(function () {
         name = user.displayName;
 
         $("#username-display").html(name);
+		
+		//Showing user posts
+		
+		var userId = user.uid;
+		var database = firebase.database();
+		database.ref('Posts/Cars').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var childData = childSnapshot.val();//get car data
+				if (childData.User == userId){
+					// populate myaccount with user posts
+					var newRowData = "<tr> <td>1</td> <td><a href='#'>Item</a></td> <td> 1.11.2017</td> <td><a href='#'>Edit</a></td> <td><a href='#'>Delete</a></td> </tr>"
+					$('#items').append(newRowData);
+				}
+			});
+		});
+		
+
       }
       else {
-        console.log("error");
+        console.log(error);
       }
     });
+	
 });
 
 //Saves user data to the data base

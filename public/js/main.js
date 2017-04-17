@@ -3,17 +3,21 @@ $(function() {
 	var selectedFile;
 	var postArray;
 	var noImage = true;
+	authCheck = true;
 
 	// Check for if a user is signed in
 	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			$("#accountElem").removeAttr('hidden');
-			$("#logoutElem").removeAttr('hidden');
+		if (authCheck == true){
+			authCheck = false;
+			if (user) {
+				$("#accountElem").removeAttr('hidden');
+				$("#logoutElem").removeAttr('hidden');
 
-			$("#welcome-txt").append(user.displayName + '.');
-			$("#welcomeElem").removeAttr('hidden');
-		} else {
-			$("#loginElem").removeAttr('hidden');
+				$("#welcome-txt").append(user.displayName + '.');
+				$("#welcomeElem").removeAttr('hidden');
+			} else {
+				$("#loginElem").removeAttr('hidden');
+			}
 		}
 	});
 
@@ -51,11 +55,11 @@ $(function() {
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
-      console.log("Sign out successful.");
-			location.reload();
+      alert("Sign out successful.");
+			window.location = 'index.html';
     }).catch(function(error) {
       // An error happened.
-      console.log("An error occurred with signing out.");
+      alert("An error occurred with signing out.");
     });
   });
 
@@ -811,11 +815,9 @@ function viewUserPosts(){
 	var database = firebase.database();
 	database.ref('Posts/Cars').once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnapshot){
-			var key = "" + childSnapshot.key;
 			var childData = childSnapshot.val();//get car data
 			if (childData.User == userId){
 				// populate myaccount with user posts
-				console.log("vincents gay");
 			}
 		});
 	});
