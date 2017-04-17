@@ -1,3 +1,5 @@
+var nameOfUser;
+
 $(function() {
 
 	var selectedFile;
@@ -680,26 +682,40 @@ function searchInfo(search){
 // Submit comment for a car post
 $('#submit-car-comment-btn').click(function(e) {
 	var database = firebase.database();
-	var comment = $('#carCommentArea').val();
-	console.log(comment);
+	var comm = $('#carCommentArea').val();
+	var user = firebase.auth().currentUser;
+	if (user){
+		var userId = user.uid;
+		nameOfUser = "Anonymous";
+		database.ref('Users/' + userId).on('value', (function(snapshot){
+			nameOfUser = snapshot.val().Name;
+		}));
 
-	database.ref('Posts/Cars').once('value').then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			var key = "" + childSnapshot.key;
-			var childData = childSnapshot.val();
-			var title = childData.Title;
-			var d = new Date();
-			var commentID = "comment" + d.getTime();
-			if (currentTitle == title) {
-				console.log('Title Matched')
-				firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
-					Comment	: comment
-				});
-				return true;
-			}
+		var comment  = "<b>" + nameOfUser + ":</b> " + comm;
+		database.ref('Posts/Cars').once('value').then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();
+				var title = childData.Title;
+				var d = new Date();
+				var commentID = "comment" + d.getTime();
+				if (currentTitle == title) {
+					console.log('Title Matched')
+					firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
+						Comment	: comment
+					});
+					return true;
+				}
+			});
 		});
-	});
-	alert("Comment Added!");
+		alert("Comment Added!");
+		$("#viewPost-modal").modal("toggle");
+	}
+	else{
+		alert("You cannot comment if you are not logged in");
+		$("#viewPost-modal").modal("toggle");
+	}
+
 });
 
 // Pulls data for a vehicle post
@@ -760,29 +776,44 @@ function populatePost(currentTitle){
 	});
 
 }
+
 // Submit a comment for a furniture post
 $('#submit-furniture-comment-btn').click(function(e) {
 	var database = firebase.database();
-	var comment = $('#furnitureCommentArea').val();
-	console.log(comment);
+	var comm = $('#furnitureCommentArea').val();
+	var user = firebase.auth().currentUser;
+	if(user){
+		var userId = user.uid;
+		database.ref('Users/' + userId).on('value', (function(snapshot){
+			nameOfUser = snapshot.val().Name;
+		}));
 
-	database.ref('Posts/Furniture').once('value').then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			var key = "" + childSnapshot.key;
-			var childData = childSnapshot.val();
-			var title = childData.Title;
-			var d = new Date();
-			var commentID = "comment" + d.getTime();
-			if (currentTitle == title) {
-				console.log('Title Matched')
-				firebase.database().ref('Posts/Furniture/' + key + '/Comments').child(commentID).set({
-					Comment	: comment
-				});
-				return true;
-			}
+		var comment  = "<b>" + nameOfUser + ":</b> " + comm;
+		database.ref('Posts/Furniture').once('value').then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();
+				var title = childData.Title;
+				var userId = childSnapshot.val().User;
+
+				var d = new Date();
+				var commentID = "comment" + d.getTime();
+				if (currentTitle == title) {
+					console.log('Title Matched')
+					firebase.database().ref('Posts/Furniture/' + key + '/Comments').child(commentID).set({
+						Comment	: comment
+					});
+					return true;
+				}
+			});
 		});
-	});
-	alert("Comment Added!");
+		alert("Comment Added!");
+		$("#viewFurniturePost-modal").modal("toggle");
+	}
+	else{
+		alert("You cannot comment if you are not logged in");
+		$("#viewFurniturePost-modal").modal("toggle");	
+	}
 });
 
 //fills data for  furniture post to be viewed
