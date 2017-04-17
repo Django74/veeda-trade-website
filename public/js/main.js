@@ -55,11 +55,11 @@ $(function() {
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
-      console.log("Sign out successful.");
-			location.reload();
+      alert("Sign out successful.");
+			window.location = 'index.html';
     }).catch(function(error) {
       // An error happened.
-      console.log("An error occurred with signing out.");
+      alert("An error occurred with signing out.");
     });
   });
 
