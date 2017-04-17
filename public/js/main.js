@@ -78,12 +78,11 @@ $(function() {
 	      displayName: username
 	      }).then(function() {
 	        // Update successful.
+			alert('Registration complete!');
+			location.reload();
 	      }, function(error) {
 	        // An error happened.
 	      });
-
-				alert('Registration complete!');
-                location.reload();
 	    }, function(error) {
 	  			// Error Handling
 	  			var errorCode = error.code;
@@ -111,7 +110,7 @@ $(function() {
 		else {
 			alert('Passwords do not match.');
 		}
-        
+
     return false;
 	});
 
@@ -146,7 +145,7 @@ $(function() {
 			console.log(error);
       console.log(error.message);
 		});
-  
+
     return false;
 	});
 
