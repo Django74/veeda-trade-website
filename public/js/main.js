@@ -39,21 +39,6 @@ $(function() {
 		e.preventDefault();
 	});
 
-	/* Debugging purposes
-  $('#getUser').click(function(e) {
-    // Get user information
-    var user = firebase.auth().currentUser;
-    console.log(user);
-    var email, uid;
-    if (user != null) {
-      email = user.email;
-      uid = user.uid;
-    }
-    console.log(email);
-    console.log(uid);
-  })
-	*/
-
   $('#logout-button').click(function(e) {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
@@ -80,21 +65,6 @@ $(function() {
     var database = firebase.database();
 
 		if (password == confirm_password) {
-			// Implementation for IF username has to be unique
-	    /*
-	    var uniqueName = true;
-	    firebase.database().ref('/Users/').once('value').then(function(snapshot) {
-	      console.log("TEST READ DATA");
-	      var checkname = snapshot.val().username;
-	      console.log(checkname);
-	      if (username == checkname) {
-	        uniqueName = false;
-	      }
-	    });
-	    console.log(uniqueName);*/
-
-	    // Check password matches confirm password and username is unique
-	    //if (password == confirm_password && uniqueName == true)
 
 			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 	      var user = firebase.auth().currentUser;
@@ -142,7 +112,6 @@ $(function() {
 			alert('Passwords do not match.');
 		}
 
-    // TODO: Go to logged in page.
     return false;
 	});
 
@@ -177,21 +146,9 @@ $(function() {
 			console.log(error);
       console.log(error.message);
 		});
-
-    // TODO: Go to logged in page.
+  
     return false;
 	});
-
-	/* For debugging
-	firebase.auth().onAuthStateChanged(function(user) {
-	if(user) {
-		console.log(user);
-		console.log("Email: " + user.email);
-	}
-	else {
-		console.log("No user signed in.");
-	}
-});*/
 
 	$('#createVehiclePost').click(function(e){
 		var status;
