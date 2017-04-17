@@ -7,7 +7,6 @@ $(function() {
 
 	// Check for if a user is signed in
 	firebase.auth().onAuthStateChanged(function(user) {
-		console.log(authCheck);
 		if (authCheck == true){
 			authCheck = false;
 			if (user) {
