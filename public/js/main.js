@@ -648,7 +648,6 @@ $('#submit-car-comment-btn').click(function(e) {
 	var user = firebase.auth().currentUser;
 	if (user){
 		var userId = user.uid;
-		nameOfUser = "Anonymous";
 		database.ref('Users/' + userId).on('value', (function(snapshot){
 			nameOfUser = snapshot.val().Name;
 		}));
