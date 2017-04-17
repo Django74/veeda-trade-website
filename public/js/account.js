@@ -271,7 +271,7 @@ $('#editVehiclePost').click(function(e){
         if (make == "Honda")
             var model = $('#selectHModel').val();
         else
-            var model = $('#selectA Model').val();
+            var model = $('#selectAModel').val();
 
 		var color = $('#selectcolor').val();
 		var description = $('#description').val();
