@@ -318,27 +318,33 @@ $('#editFurniturePost').click(function(e){
 });
 
 function deletePost(key){
-	var database = firebase.database();
-	database.ref('Posts/Cars').once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var postKey = "" + childSnapshot.key;
-			if (postKey == key){
-				childSnapshot.ref.remove();
-				alert("You have deleted the post");
-				location.reload();
-			}
+	var r = confirm("Are you sure you want to delete?");
+	if (r == true){
+		var database = firebase.database();
+		database.ref('Posts/Cars').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var postKey = "" + childSnapshot.key;
+				if (postKey == key){
+					childSnapshot.ref.remove();
+					alert("You have deleted the post");
+					location.reload();
+				}
+			});
 		});
-	});
-	database.ref('Posts/Furniture').once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var postKey = "" + childSnapshot.key;
-			if (postKey == key){
-				childSnapshot.ref.remove();
-				alert("You have deleted the post");
-				location.reload();
-			}
+		database.ref('Posts/Furniture').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var postKey = "" + childSnapshot.key;
+				if (postKey == key){
+					childSnapshot.ref.remove();
+					alert("You have deleted the post");
+					location.reload();
+				}
+			});
 		});
-	});
+	}
+	else {
+	
+	}
 }
 
 //Saves user data to the data base
