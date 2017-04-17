@@ -8,9 +8,9 @@ $(document).ready(function () {
         name = user.displayName;
 
         $("#username-display").html(name);
-		
+
 		//Showing user posts
-		
+
 		var userId = user.uid;
 		var database = firebase.database();
 		database.ref('Posts/Cars').once('value').then(function(snapshot){
@@ -20,19 +20,30 @@ $(document).ready(function () {
 				var category = childSnapshot.val().Category;
 				if (childData.User == userId){
 					// populate myaccount with user posts
-					var newRowData = "<tr> <td>"+ key +"</td> <td>" + category + "</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a href='#'>Delete</a></td> </tr>"
+					var newRowData = "<tr> <td>"+ key +"</td> <td>" + childSnapshot.val().Title+ "</td><td>" + category + "</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a onclick='deletePost(\""+key+"\")'>Delete</a></td> </tr>"
 					$('#items').append(newRowData);
 				}
 			});
 		});
-		
+		database.ref('Posts/Furniture').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				var category = childSnapshot.val().Category;
+				if (childData.User == userId){
+					// populate myaccount with user posts
+					var newRowData = "<tr> <td>"+ key +"</td> <td>" +childSnapshot.val().Title + "</td><td>"+ category+"</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a onclick='deletePost(\""+key+"\")'>Delete</a></td> </tr>"
+					$('#items').append(newRowData);
+				}
+			});
+		});
 
       }
       else {
         console.log(error);
       }
     });
-	
+
 });
 
 var currentPostToEdit;
@@ -306,6 +317,30 @@ $('#editFurniturePost').click(function(e){
 
 });
 
+function deletePost(key){
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var postKey = "" + childSnapshot.key;
+			if (postKey == key){
+				childSnapshot.ref.remove();
+				alert("You have deleted the post");
+				location.reload();
+			}
+		});
+	});
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var postKey = "" + childSnapshot.key;
+			if (postKey == key){
+				childSnapshot.ref.remove();
+				alert("You have deleted the post");
+				location.reload();
+			}
+		});
+	});
+}
+
 //Saves user data to the data base
 $(function() {
     $('#account-info-btn').click(function(e){
@@ -355,7 +390,7 @@ $(function() {
               alert("User updated");
         			location.reload();
             }, function(error) {
-              alert("User could not be updated");
+              alert("Email could not be updated");
             });
           }
           if (newPass != "" && newPass == verPass) {
@@ -363,7 +398,7 @@ $(function() {
               alert("User updated");
         			location.reload();
             }, function(error) {
-              alert("User could not be updated");
+              alert("Password could not be updated");
             });
           }
           $("#registrationForm")[0].reset()

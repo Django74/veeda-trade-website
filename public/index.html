@@ -132,10 +132,12 @@
                                     <div class="form-group">
                                         <input type="password" name="login-password" id="login-password" tabindex="2" class="form-control" placeholder="Password" required>
                                     </div>
+                                    <!--
                                     <div class="form-group text-center">
                                         <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                                         <label for="remember"> Remember Me</label>
                                     </div>
+                                  -->
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
@@ -616,15 +618,23 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-4" id="visible-comments">
-                  <h4>Comments</h4>
+                  <table class="table table-striped">
+                   <thead>
+                     <tr>
+                       <th>Comments</th>
+                     </tr>
+                   </thead>
+                   <tbody id="carCommentsBody">
+                   </tbody>
+                 </table>
                 </div>
                 <div class="col-xs-3" id="submit-comment">
                   <div class="form-group">
                     <label for="submit-comment">Submit Comment</label>
-                    <textarea id="commentArea" rows="5" class="form-control" name="submit-comment" ></textarea>
+                    <textarea id="carCommentArea" rows="5" class="form-control" name="submit-comment" ></textarea>
                   </div>
                   <div class="form-group">
-            				<button id="submit-comment-btn" class="btn btn-primary" >
+            				<button id="submit-car-comment-btn" class="btn btn-primary" >
             					Comment
             				</button>
             				<button id="closeVehicleModal" class="btn btn-default">
@@ -737,17 +747,17 @@
                        <th>Comments</th>
                      </tr>
                    </thead>
-                   <tbody id="commentsBody">
+                   <tbody id="furnitureCommentsBody">
                    </tbody>
                  </table>
                 </div>
-                <div class="col-xs-3" id="submit-comment">
+                <div class="col-xs-3" id="submit-furniture-comment">
                   <div class="form-group">
-                    <label for="submit-comment">Submit A Comment</label>
-                    <textarea id="submit-comment" rows="5" class="form-control" name="submit-comment" ></textarea>
+                    <label for="furnitureCommentArea">Submit A Comment</label>
+                    <textarea id="furnitureCommentArea" rows="5" class="form-control" name="furnitureCommentArea" ></textarea>
                   </div>
                   <div class="form-group">
-            				<button id="submit-comment-btn" class="btn btn-primary" >
+            				<button id="submit-furniture-comment-btn" class="btn btn-primary" >
             					Comment
             				</button>
             				<button id="closeFurnitureModal" class="btn btn-default">
