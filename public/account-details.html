@@ -213,7 +213,303 @@
         </div><!--/tab-content-->
 
     </div><!--/col-9-->
-</div><!--/row-->
+
+<div class="modal fade" id="editVehiclePost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="container">
+    	<div class="row">
+
+    	    <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+    		            <h1>Edit Car Post</h1>
+                </div>
+
+    		   <!-- <div class="form-group has-error">
+    				<label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
+    				<input type="text" class="form-control" name="slug" />
+    				<span class="help-block">Field not entered!</span>
+    			</div> -->
+          <div class="panel-body">
+
+            <h4><b>Seller Information</b></h4>
+
+            <hr>
+
+            <div class="form-group">
+              <label for="title">Phone Number <span class="require">*</span></label>
+              <input id="sellerPhone" type="text" class="form-control" name="title" />
+            </div>
+
+            <div class="form-group">
+              <label for="title">Address <span class="require">*</span></label>
+              <input id="sellerAddress" type="text" class="form-control" name="title" />
+            </div>
+
+            <hr>
+
+            <h4><b>Item Information</b></h4>
+            <hr>
+
+    			<div class="form-group">
+    				<label for="title">Title <span class="require">*</span></label>
+    				<input id="title" type="text" class="form-control" name="title" />
+    			</div>
+
+    			<div class="form-group">
+    				<label for="title">Price <span class="require">*</span></label>
+    				<input id="price" type="text" class="form-control" name="title" />
+    			</div>
+
+    			<div class="form-group">
+    				<label for="title">Year <span class="require">*</span></label>
+    				<input id="year" type="text" class="form-control" name="title" />
+    			</div>
+
+    			<div class="form-group">
+    				<label for="title">Kilometers <span class="require">*</span></label>
+    				<input id="kilometers" type="text" class="form-control" name="title" />
+    			</div>
+
+    			<br>
+
+    			<!-- Multiple Radios -->
+    			<div class="form-group">
+    			  <label class="col-md-2 control-label" for="radios">Status: </label>
+    			  <div class="col-md-4">
+    			  <div class="radio">
+    				<label for="radios-0">
+    				  <input name="radio" id="radio-0" value="New"  type="radio">
+    				  New
+    				</label>
+    				</div>
+    			  <div class="radio">
+    				<label for="radios-1">
+    				  <input name="radio" id="radio-1" value="Used" type="radio">
+    				  Used
+    				</label>
+    				</div>				  <div class="radio">
+    				<label for="radios-2">
+    				  <input name="radio" id="radio-2" value="Lease Takeover" type="radio">
+    				  Lease Takeover
+    				</label>
+    				</div>
+    			  </div>
+    			</div>
+    			<br><br><br>
+    			<br><br><br>
+
+    			<!-- Select Make -->
+
+    			<div class="form-group">
+    			  <label class="col-md-2 control-label" for="selectMake">Make: </label>
+    			  <div class="col-md-3">
+    				<select id="selectMake" name="selectMake" class="form-control" onchange="showForm()">
+    				  <option value="0">Select Option</option>
+    				  <option value="Acura">Acura</option>
+    				  <option value="Honda">Honda</option>
+    				</select>
+    			  </div>
+    			</div>
+
+    			<br>
+
+    			<!-- Select acuraModel -->
+    			<div class="form-group" style="display:none" id="selectAcuraModel">
+    			  <label class="col-md-2 control-label" for="selectAcuraModel">Model: </label>
+    			  <div class="col-md-3">
+    				<select id="selectAModel" name="selectAcuraModel" class="form-control" onchange="showForm()">
+    				  <option value="ILX">ILX</option>
+    				  <option value="NSX">NSX</option>
+    				  <option value="MDX">MDX</option>
+
+    				</select>
+    			  </div>
+    			</div>
+
+    			<!-- Select hondaModel -->
+    			<div class="form-group" style="display:none" id="selectHondaModel">
+    			  <label class="col-md-2 control-label" for="selectHondaModel">Model: </label>
+    			  <div class="col-md-3">
+    				<select id="selectHModel" name="selectHondaModel" class="form-control" onchange="showForm()">
+    				  <option value="HR-V">HR-V</option>
+    				  <option value="Accord Sedan">Accord Sedan</option>
+    				  <option value="Odyssey">Odyssey</option>
+
+    				</select>
+    			  </div>
+    			</div>
+
+    			<br><br><br>
+
+    			<div class="form-group">
+    			  <label class="col-md-2 control-label" for="selectbasic">Color: </label>
+    			  <div class="col-md-3">
+    				<select id="selectcolor" name="selectbasic" class="form-control">
+    				  <option value="Black">Black</option>
+    				  <option value="Silver">Silver</option>
+    				  <option value="Red">Red</option>
+    				  <option value="Blue">Blue</option>
+    				  <option value="White">White</option>
+    				</select>
+    			  </div>
+    			</div>
+
+    			<br><br><br>
+
+    			<div class="form-group">
+    				<label for="description">Description</label>
+    				<textarea id="description" rows="5" class="form-control" name="description" ></textarea>
+    			</div>
+
+    			<div class="form-group">
+    				<p><span class="require">*</span> - required fields</p>
+    			</div>
+
+
+    			<!-- Upload File -->
+    			<div>
+    				<label class="upload-group">
+    				Upload File
+    				<input type="file" class="upload-group" id="vehicleFile">
+    				</label>
+    			</div>
+
+    			<br><br>
+
+    			<div class="form-group">
+    				<button id="editVehiclePost" class="btn btn-primary" >
+    					Edit
+    				</button>
+    				<button id="cancelEditVehiclePost" class="btn btn-default">
+    					Cancel
+    				</button>
+    			</div>
+
+        </div>
+
+    		</div>
+
+    	</div>
+    </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editFurniturePost-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="container">
+  <div class="row">
+
+      <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+
+    <h1>Edit Furniture Post</h1>
+  </div>
+
+       <!-- <div class="form-group has-error">
+        <label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
+        <input type="text" class="form-control" name="slug" />
+        <span class="help-block">Field not entered!</span>
+      </div> -->
+      <div class="panel-body">
+
+        <h4><b>Seller Information</b></h4>
+
+        <hr>
+
+        <div class="form-group">
+          <label for="title">Phone Number <span class="require">*</span></label>
+          <input id="sellerFurniturePhone" type="text" class="form-control" name="title" />
+        </div>
+
+        <div class="form-group">
+          <label for="title">Address <span class="require">*</span></label>
+          <input id="sellerFurnitureAddress" type="text" class="form-control" name="title" />
+        </div>
+
+        <hr>
+
+        <h4><b>Item Information</b></h4>
+        <hr>
+
+      <div class="form-group">
+        <label for="title">Title <span class="require">*</span></label>
+        <input id="furnitureTitle" type="text" class="form-control" name="title" />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Price <span class="require">*</span></label>
+        <input id="furniturePrice" type="text" class="form-control" name="title" />
+      </div>
+
+      <br>
+
+      <!-- Multiple Radios -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="radios">Status: </label>
+        <div class="col-md-4">
+        <div class="radio">
+        <label for="radios-0">
+          <input name="radio" id="furniture-0" value="New" checked="checked" type="radio">
+          New
+        </label>
+        </div>
+        <div class="radio">
+        <label for="radios-1">
+          <input name="radio" id="furniture-1" value="Used" type="radio">
+          Used
+        </label>
+        </div>
+        <div class="radio">
+        <label for="radios-2">
+          <input name="radio" id="furniture-2" value="Damaged" type="radio">
+          Damaged
+        </label>
+        </div>
+        </div>
+      </div>
+      <br><br><br>
+      <br><br><br>
+
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="furnitureDescription" rows="5" class="form-control" name="description" ></textarea>
+      </div>
+
+      <div class="form-group">
+        <p><span class="require">*</span> - required fields</p>
+      </div>
+
+
+      <!-- Upload File -->
+      <div>
+        <label class="upload-group">
+        Upload File
+        <input type="file" class="upload-group" id="furnitureFile">
+        </label>
+      </div>
+
+      <br><br>
+
+      <div class="form-group">
+        <button id="editFurniturePost" class="btn btn-primary" >
+          Edit
+        </button>
+        <button id="cancelEditFurniturePost" class="btn btn-default">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
@@ -232,6 +528,23 @@
         messagingSenderId: "260648117580"
     };
     firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+    function showForm() {
+        var selopt = document.getElementById("selectMake").value;
+        if (selopt == "Acura") {
+            document.getElementById("selectAcuraModel").style.display = "block";
+            document.getElementById("selectHondaModel").style.display = "none";
+        }
+        if (selopt == "Honda") {
+            document.getElementById("selectHondaModel").style.display = "block";
+            document.getElementById("selectAcuraModel").style.display = "none";
+        }
+        if (selopt == 0) {
+            document.getElementById("selectHondaModel").style.display = "none";
+            document.getElementById("selectAcuraModel").style.display = "none";
+        }
+    }
 </script>
 
 </body>
