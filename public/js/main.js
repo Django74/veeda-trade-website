@@ -379,28 +379,6 @@ $(function() {
 
 	});
 
-	$('#submit-comment-btn').click(function(e) {
-		var database = firebase.database();
-		var comment = $('#commentArea').val();
-		console.log(comment);
-
-		database.ref('Posts/Cars').once('value').then(function(snapshot) {
-			snapshot.forEach(function(childSnapshot) {
-				var key = "" + childSnapshot.key;
-				var childData = childSnapshot.val();
-				var title = childData.Title;
-				var d = new Date();
-				var commentID = "comment" + d.getTime();
-				if (currentTitle == title) {
-					console.log('Title Matched')
-					firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
-						Comment	: comment
-					});
-					return true;
-				}
-			});
-		});
-	});
 
 	$('#cancelVehiclePost').click(function(e){
 		$('#createVehiclePost-modal').modal('toggle');
@@ -699,8 +677,32 @@ function searchInfo(search){
 		});
 	});
 }
+// Submit comment for a car post
+$('#submit-car-comment-btn').click(function(e) {
+	var database = firebase.database();
+	var comment = $('#carCommentArea').val();
+	console.log(comment);
 
-//fills data for post to be viewed
+	database.ref('Posts/Cars').once('value').then(function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();
+			var title = childData.Title;
+			var d = new Date();
+			var commentID = "comment" + d.getTime();
+			if (currentTitle == title) {
+				console.log('Title Matched')
+				firebase.database().ref('Posts/Cars/' + key + '/Comments').child(commentID).set({
+					Comment	: comment
+				});
+				return true;
+			}
+		});
+	});
+	alert("Comment Added!");
+});
+
+// Pulls data for a vehicle post
 function populatePost(currentTitle){
 	var database = firebase.database();
 
@@ -747,14 +749,8 @@ function populatePost(currentTitle){
 
 				database.ref('Posts/Cars/' + key + '/Comments').once('value').then(function(snapshot) {
 					snapshot.forEach(function(childSnapshot) {
-						var cmnt = childData.Comment;
-						$("#commentsBody").append(
-							$('<tr/>')
-								.append(
-									$('<td/>')
-										.html(cmnt)
-								)
-						)
+						var cmnt = childData.val().Comment;
+						$("#carCommentsBody").append('<tr><td>'+ cmnt + '</td></tr>')
 					});
 				});
 				//end loop
@@ -763,10 +759,31 @@ function populatePost(currentTitle){
 		});
 	});
 
-
-
 }
+// Submit a comment for a furniture post
+$('#submit-furniture-comment-btn').click(function(e) {
+	var database = firebase.database();
+	var comment = $('#furnitureCommentArea').val();
+	console.log(comment);
 
+	database.ref('Posts/Furniture').once('value').then(function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			var key = "" + childSnapshot.key;
+			var childData = childSnapshot.val();
+			var title = childData.Title;
+			var d = new Date();
+			var commentID = "comment" + d.getTime();
+			if (currentTitle == title) {
+				console.log('Title Matched')
+				firebase.database().ref('Posts/Furniture/' + key + '/Comments').child(commentID).set({
+					Comment	: comment
+				});
+				return true;
+			}
+		});
+	});
+	alert("Comment Added!");
+});
 
 //fills data for  furniture post to be viewed
 function populateFurniturePost(currentTitle){
@@ -809,22 +826,7 @@ function populateFurniturePost(currentTitle){
 	});
 }
 
-function viewUserPosts(){
-	var user = firebase.auth().currentUser;
-	var userId = user.uid;
-	var database = firebase.database();
-	database.ref('Posts/Cars').once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var childData = childSnapshot.val();//get car data
-			if (childData.User == userId){
-				// populate myaccount with user posts
-			}
-		});
-	});
 
-
-
-}
 
 //function to replace number with commas
 function numberWithCommas(x) {
