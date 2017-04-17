@@ -15,10 +15,12 @@ $(document).ready(function () {
 		var database = firebase.database();
 		database.ref('Posts/Cars').once('value').then(function(snapshot){
 			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
 				var childData = childSnapshot.val();//get car data
+				var category = childSnapshot.val().Category;
 				if (childData.User == userId){
 					// populate myaccount with user posts
-					var newRowData = "<tr> <td>1</td> <td><a href='#'>Item</a></td> <td> 1.11.2017</td> <td><a href='#'>Edit</a></td> <td><a href='#'>Delete</a></td> </tr>"
+					var newRowData = "<tr> <td>"+ key +"</td> <td>" + category + "</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a href='#'>Delete</a></td> </tr>"
 					$('#items').append(newRowData);
 				}
 			});
@@ -32,6 +34,10 @@ $(document).ready(function () {
     });
 	
 });
+
+function editPost(key){
+	console.log(key);
+}
 
 //Saves user data to the data base
 $(function() {
