@@ -208,7 +208,12 @@ $(function() {
 		var newCar = document.getElementById('radio-0').checked;
 		var lease = document.getElementById('radio-2').checked;
 		var make = $('#selectMake').val();
-		var model = $('#selectModel').val();
+		if (make == "Honda"){
+			var model = $('#selectHModel').val();
+		}
+		else {
+			var model = $('#selectAModel').val();
+		}
 		var color = $('#selectcolor').val();
 		var description = $('#description').val();
 		var user = firebase.auth().currentUser;
@@ -812,7 +817,7 @@ $('#submit-furniture-comment-btn').click(function(e) {
 	}
 	else{
 		alert("You cannot comment if you are not logged in");
-		$("#viewFurniturePost-modal").modal("toggle");	
+		$("#viewFurniturePost-modal").modal("toggle");
 	}
 });
 
