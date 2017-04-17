@@ -747,7 +747,7 @@ function populatePost(currentTitle){
 
 				database.ref('Posts/Cars/' + key + '/Comments').once('value').then(function(snapshot) {
 					snapshot.forEach(function(childSnapshot) {
-						var cmnt = childData.Comment;
+						var cmnt = childData.val().Comment;
 						$("#commentsBody").append(
 							$('<tr/>')
 								.append(
@@ -809,22 +809,7 @@ function populateFurniturePost(currentTitle){
 	});
 }
 
-function viewUserPosts(){
-	var user = firebase.auth().currentUser;
-	var userId = user.uid;
-	var database = firebase.database();
-	database.ref('Posts/Cars').once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var childData = childSnapshot.val();//get car data
-			if (childData.User == userId){
-				// populate myaccount with user posts
-			}
-		});
-	});
 
-
-
-}
 
 //function to replace number with commas
 function numberWithCommas(x) {
