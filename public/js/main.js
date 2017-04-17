@@ -83,7 +83,7 @@ $(function() {
 	      });
 
 				alert('Registration complete!');
-
+				location.reload();
 	    }, function(error) {
 	  			// Error Handling
 	  			var errorCode = error.code;
