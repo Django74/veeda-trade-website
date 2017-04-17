@@ -137,7 +137,6 @@ $( "#editVehiclePost-modal" ).on('show.bs.modal', function(e){
         if(make == "Acura")
         {
             $("#editVehiclePost-modal #selectMake option[value='Acura']").attr('selected',true);
-            console.log(model);
             if(model=="ILX")
             {
                 $("#editVehiclePost-modal #selectAcuraModel").show();
@@ -151,9 +150,7 @@ $( "#editVehiclePost-modal" ).on('show.bs.modal', function(e){
             }
             
             else if(model=="MDX")
-            {
-                            console.log(model);
-    
+            {  
                 $("#editVehiclePost-modal #selectAcuraModel").show();
                 $("#editVehiclePost-modal #selectAModel option[value='MDX']").attr('selected',true);
             }
@@ -192,17 +189,17 @@ $( "#editVehiclePost-modal" ).on('show.bs.modal', function(e){
             $("#editVehiclePost-modal #selectcolor option[value='Silver']").attr('selected',true);
         }
         
-        if(color=="Red")
+        else if(color=="Red")
         {
             $("#editVehiclePost-modal #selectcolor option[value='Red']").attr('selected',true);
         }
         
-        if(color=="Blue")
+        else if(color=="Blue")
         {
             $("#editVehiclePost-modal #selectcolor option[value='Blue']").attr('selected',true);
         }
         
-        if(color=="White")
+        else if(color=="White")
         {
             $("#editVehiclePost-modal #selectcolor option[value='White']").attr('selected',true);
         }
