@@ -20,12 +20,23 @@ $(document).ready(function () {
 				var category = childSnapshot.val().Category;
 				if (childData.User == userId){
 					// populate myaccount with user posts
-					var newRowData = "<tr> <td>"+ key +"</td> <td>" + category + "</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a href='#'>Delete</a></td> </tr>"
+					var newRowData = "<tr> <td>"+ key +"</td> <td>" + childSnapshot.val().Title+ "</td><td>" + category + "</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a onclick='deletePost(\""+key+"\")'>Delete</a></td> </tr>"
 					$('#items').append(newRowData);
 				}
 			});
 		});
-		
+		database.ref('Posts/Furniture').once('value').then(function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+				var key = "" + childSnapshot.key;
+				var childData = childSnapshot.val();//get car data
+				var category = childSnapshot.val().Category;
+				if (childData.User == userId){
+					// populate myaccount with user posts
+					var newRowData = "<tr> <td>"+ key +"</td> <td>" +childSnapshot.val().Title + "</td><td>"+ category+"</td> <td><a onclick='editPost(\""+key+"\")'>Edit</a></td> <td><a onclick='deletePost(\""+key+"\")'>Delete</a></td> </tr>"
+					$('#items').append(newRowData);
+				}
+			});
+		});		
 
       }
       else {
@@ -37,6 +48,30 @@ $(document).ready(function () {
 
 function editPost(key){
 	console.log(key);
+}
+
+function deletePost(key){
+	var database = firebase.database();
+	database.ref('Posts/Cars').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var postKey = "" + childSnapshot.key;
+			if (postKey == key){
+				childSnapshot.ref.remove();
+				alert("You have deleted the post");
+				location.reload();
+			}
+		});
+	});
+	database.ref('Posts/Furniture').once('value').then(function(snapshot){
+		snapshot.forEach(function(childSnapshot){
+			var postKey = "" + childSnapshot.key;
+			if (postKey == key){
+				childSnapshot.ref.remove();
+				alert("You have deleted the post");
+				location.reload();
+			}
+		});
+	});
 }
 
 //Saves user data to the data base
